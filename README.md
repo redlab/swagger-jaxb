@@ -10,9 +10,11 @@ Usage
 1.
 * build the plugin with maven
 * install it in your local repo
-* add the plugin to your classpath and use -swaggify on your jaxb command line
-or 
+* add the plugin to your classpath and use -swaggify on your jaxb command line or configure it i your pom
+
+ 
 Use with maven plugin
+
 ```
     <plugin>
         <groupId>org.codehaus.mojo</groupId>

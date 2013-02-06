@@ -13,7 +13,7 @@ Usage
 * add the plugin to your classpath and use -swaggify on your jaxb command line or configure it i your pom
 
  
-Use with maven plugin
+Use with jaxb2-maven-plugin
 
 ```
     <plugin>
@@ -64,3 +64,5 @@ Use with maven plugin
 		</dependencies>
 	</plugin>
 ```
+
+The plugin dependencies are needed until the JAXB2 plugin is updated to use the latest version of jaxb-xjc and jaxp. Otherwise the code generation will fail due to missing methods.

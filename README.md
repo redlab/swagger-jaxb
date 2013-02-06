@@ -3,7 +3,7 @@ swagger-jaxb
 
 JAXB XJC Plugin for automatically adding annotations from Swagger to generated classes from an XSD
 
-WARNING !! This plugin is not fully finished and is in experimental phase !!
+Please note this plugin is not fully finished and is in development phase !! Feel free to help out and send pull requests.
 
 Usage
 ============

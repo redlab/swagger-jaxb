@@ -11,15 +11,9 @@
  * specific language governing permissions and limitations under the License.
  */
 package be.redlab.jaxb.swagger;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import com.sun.codemodel.JType;
 /**
  * @author redlab
  *
@@ -31,166 +25,11 @@ public class SwaggerAnnotationsJaxbPluginTest {
 	@Before
 	public void setup() {
 		plugin = new SwaggerAnnotationsJaxbPlugin();
+
 	}
 
 	@Test
 	public void optionName() {
 		Assert.assertEquals("swaggerify", plugin.getOptionName());
-	}
-
-	@Test
-	public void typeCheckPrimitiveInt() {
-		JType jType = mock(JType.class);
-		when(jType.isPrimitive()).thenReturn(Boolean.TRUE);
-		when(jType.fullName()).thenReturn("int");
-		Assert.assertEquals("int", plugin.determineDataType(jType));
-	}
-
-	@Test
-	public void typeCheckPrimitiveLong() {
-		JType jType = mock(JType.class);
-		when(jType.isPrimitive()).thenReturn(Boolean.TRUE);
-		when(jType.fullName()).thenReturn("long");
-		Assert.assertEquals("long", plugin.determineDataType(jType));
-	}
-
-	@Test
-	public void typeCheckPrimitiveDouble() {
-		JType jType = mock(JType.class);
-		when(jType.isPrimitive()).thenReturn(Boolean.TRUE);
-		when(jType.fullName()).thenReturn("double");
-		Assert.assertEquals("double", plugin.determineDataType(jType));
-	}
-
-	@Test
-	public void typeCheckPrimitiveFloat() {
-		JType jType = mock(JType.class);
-		when(jType.isPrimitive()).thenReturn(Boolean.TRUE);
-		when(jType.fullName()).thenReturn("float");
-		Assert.assertEquals("float", plugin.determineDataType(jType));
-	}
-
-	@Test
-	public void typeCheckPrimitiveByte() {
-		JType jType = mock(JType.class);
-		when(jType.isPrimitive()).thenReturn(Boolean.TRUE);
-		when(jType.fullName()).thenReturn("byte");
-		Assert.assertEquals("byte", plugin.determineDataType(jType));
-	}
-
-	@Test
-	public void typeCheckPrimitiveShort() {
-		JType jType = mock(JType.class);
-		when(jType.isPrimitive()).thenReturn(Boolean.TRUE);
-		when(jType.fullName()).thenReturn("short");
-		Assert.assertEquals("int", plugin.determineDataType(jType));
-	}
-
-	@Test
-	public void typeCheckArray() {
-		JType jType = mock(JType.class);
-		when(jType.isPrimitive()).thenReturn(Boolean.FALSE);
-		when(jType.isArray()).thenReturn(Boolean.TRUE);
-		when(jType.fullName()).thenReturn("java.lang.String[]");
-		Assert.assertEquals("Array", plugin.determineDataType(jType));
-	}
-
-	@Test
-	public void typeCheckString() {
-		JType jType = mock(JType.class);
-		when(jType.isPrimitive()).thenReturn(Boolean.FALSE);
-		when(jType.isArray()).thenReturn(Boolean.FALSE);
-		when(jType.fullName()).thenReturn("java.lang.String");
-		Assert.assertEquals("string", plugin.determineDataType(jType));
-	}
-
-	@Test
-	public void typeCheckInteger() {
-		JType jType = mock(JType.class);
-		when(jType.isPrimitive()).thenReturn(Boolean.FALSE);
-		when(jType.isArray()).thenReturn(Boolean.FALSE);
-		when(jType.fullName()).thenReturn("java.lang.Integer");
-		Assert.assertEquals("int", plugin.determineDataType(jType));
-	}
-
-	@Test
-	public void typeCheckLong() {
-		JType jType = mock(JType.class);
-		when(jType.isPrimitive()).thenReturn(Boolean.FALSE);
-		when(jType.isArray()).thenReturn(Boolean.FALSE);
-		when(jType.fullName()).thenReturn("java.lang.Long");
-		Assert.assertEquals("long", plugin.determineDataType(jType));
-	}
-
-	@Test
-	public void typeCheckDouble() {
-		JType jType = mock(JType.class);
-		when(jType.isPrimitive()).thenReturn(Boolean.FALSE);
-		when(jType.isArray()).thenReturn(Boolean.FALSE);
-		when(jType.fullName()).thenReturn("java.lang.Double");
-		Assert.assertEquals("double", plugin.determineDataType(jType));
-	}
-
-	@Test
-	public void typeCheckSHort() {
-		JType jType = mock(JType.class);
-		when(jType.isPrimitive()).thenReturn(Boolean.FALSE);
-		when(jType.isArray()).thenReturn(Boolean.FALSE);
-		when(jType.fullName()).thenReturn("java.lang.Short");
-		Assert.assertEquals("int", plugin.determineDataType(jType));
-	}
-
-	@Test
-	public void typeCheckByte() {
-		JType jType = mock(JType.class);
-		when(jType.isPrimitive()).thenReturn(Boolean.FALSE);
-		when(jType.isArray()).thenReturn(Boolean.FALSE);
-		when(jType.fullName()).thenReturn("java.lang.Byte");
-		Assert.assertEquals("byte", plugin.determineDataType(jType));
-	}
-
-	@Test
-	public void typeCheckFloat() {
-		JType jType = mock(JType.class);
-		when(jType.isPrimitive()).thenReturn(Boolean.FALSE);
-		when(jType.isArray()).thenReturn(Boolean.FALSE);
-		when(jType.fullName()).thenReturn("java.lang.Float");
-		Assert.assertEquals("float", plugin.determineDataType(jType));
-	}
-
-	@Test
-	public void typeCheckTypedList() {
-		JType jType = mock(JType.class);
-		when(jType.isPrimitive()).thenReturn(Boolean.FALSE);
-		when(jType.isArray()).thenReturn(Boolean.FALSE);
-		when(jType.fullName()).thenReturn("java.util.List<Integer>");
-		Assert.assertEquals("List", plugin.determineDataType(jType));
-	}
-
-	@Test
-	public void typeCheckUnTypedList() {
-		JType jType = mock(JType.class);
-		when(jType.isPrimitive()).thenReturn(Boolean.FALSE);
-		when(jType.isArray()).thenReturn(Boolean.FALSE);
-		when(jType.fullName()).thenReturn("java.util.List");
-		Assert.assertEquals("List", plugin.determineDataType(jType));
-	}
-
-	@Test
-	public void typeCheckTypedArrayList() {
-		JType jType = mock(JType.class);
-		when(jType.isPrimitive()).thenReturn(Boolean.FALSE);
-		when(jType.isArray()).thenReturn(Boolean.FALSE);
-		when(jType.fullName()).thenReturn("java.util.ArrayList<Integer>");
-		Assert.assertEquals("List", plugin.determineDataType(jType));
-	}
-
-	@Test
-	public void typeCheckTypedSet() {
-		JType jType = mock(JType.class);
-		when(jType.isPrimitive()).thenReturn(Boolean.FALSE);
-		when(jType.isArray()).thenReturn(Boolean.FALSE);
-		when(jType.fullName()).thenReturn("java.util.Set<Object>");
-		Assert.assertEquals("Set", plugin.determineDataType(jType));
 	}
 }

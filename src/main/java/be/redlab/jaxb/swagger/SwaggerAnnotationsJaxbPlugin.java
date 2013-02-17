@@ -13,13 +13,8 @@
 package be.redlab.jaxb.swagger;
 
 import java.io.StringWriter;
-import java.math.BigInteger;
-import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
@@ -28,7 +23,6 @@ import com.sun.codemodel.JAnnotationUse;
 import com.sun.codemodel.JAnnotationValue;
 import com.sun.codemodel.JFormatter;
 import com.sun.codemodel.JMethod;
-import com.sun.codemodel.JType;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.Plugin;
 import com.sun.tools.xjc.outline.ClassOutline;
@@ -42,11 +36,8 @@ import com.wordnik.swagger.annotations.ApiProperty;
  */
 public class SwaggerAnnotationsJaxbPlugin extends Plugin {
 
-	/**
-	 *
-	 */
 	private static final String SWAGGERIFY = "swaggerify";
-
+	private static final String USAGE = "Add this plugin to the JAXB classes generator classpath and provide the argument '-swaggerify'.";
 	/*
 	 * (non-Javadoc)
 	 *
@@ -65,79 +56,7 @@ public class SwaggerAnnotationsJaxbPlugin extends Plugin {
 	 */
 	@Override
 	public String getUsage() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not Implemented");
-
-	}
-
-	/*
-	 * Swagger Type Description
-	 * ----------------------------
-	 * byte
-	 * boolean
-	 * int
-	 * long
-	 * float
-	 * double
-	 * string
-	 * Date a ISO-8601 Date, which is t in a String (1970-01-01T00:00:00.000+0000)
-	 */
-	public String determineDataType(final JType jType) {
-		String newName = null;
-		String fullName = jType.fullName();
-		if (jType.isArray()) {
-			newName = "Array";
-		} else if (jType.isPrimitive()) {
-			if (fullName.equals("short")) {
-				newName = "int";
-			} else {
-				newName = fullName;
-			}
-		} else {
-			// TODO change to switch once we only support java 1.7
-			if (fullName.equals(String.class.getName())) {
-				newName = "string";
-			} else if (fullName.equals(Integer.class.getName())) {
-				newName = "int";
-			} else if (fullName.equals(BigInteger.class.getName()) || fullName.equals(Long.class.getName())) {
-				newName = "long";
-			} else if (fullName.equals(Double.class.getName())) {
-				newName = "double";
-			} else if (fullName.equals(Byte.class.getName())) {
-				newName = "byte";
-			} else if (fullName.equals(Float.class.getName())) {
-				newName = "float";
-			} else if (fullName.equals(Short.class.getName())) {
-				newName = "int";
-			} else if (fullName.equals(Boolean.class.getName())) {
-				newName = "boolean";
-			} else if (fullName.equals(Date.class.getName())) {
-				newName = "long";
-			} else
-				try {
-					if (fullName.contains("<")) {
-						StringBuilder untypedName = new StringBuilder();
-						for (char c : fullName.toCharArray()) {
-							if (c == '<') {
-								break;
-							}
-							untypedName.append(c);
-						}
-						fullName = untypedName.toString();
-					}
-					Class<?> forName = Class.forName(fullName);
-					if (Calendar.class.isAssignableFrom(forName)) {
-						newName = "date";
-					} else if (List.class.isAssignableFrom(forName)) {
-						newName = "List";
-					} else if (Set.class.isAssignableFrom(forName)) {
-						newName = "Set";
-					}
-				} catch (ClassNotFoundException e) {
-					newName = jType.name();
-				}
-		}
-		return newName;
+		return USAGE;
 	}
 
 	/*
@@ -169,7 +88,7 @@ public class SwaggerAnnotationsJaxbPlugin extends Plugin {
 						JAnnotationUse annotate = m.annotate(ApiProperty.class);
 						String name = m.name().substring(3);
 						annotate.param("value", name);
-						String dataType = determineDataType(m.type());
+						String dataType = DataTypeDeterminationUtil.determineDataType(m.type());
 						if (dataType != null) {
 							annotate.param("dataType", dataType);
 						}

@@ -31,7 +31,6 @@ import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JType;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.Plugin;
-import com.sun.tools.xjc.model.Model;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.Outline;
 import com.wordnik.swagger.annotations.ApiClass;
@@ -150,7 +149,6 @@ public class SwaggerAnnotationsJaxbPlugin extends Plugin {
 	@Override
 	public boolean run(final Outline outline, final Options opt, final ErrorHandler errorHandler) throws SAXException {
 		Collection<? extends ClassOutline> classes = outline.getClasses();
-		Model model = outline.getModel();
 		for (ClassOutline o : classes) {
 			if (o.implClass.isClass() && !o.implClass.isAbstract() && !o.implClass.isInterface()
 					&& !o.implClass.isAnnotationTypeDeclaration()) {

@@ -5,6 +5,8 @@ JAXB XJC Plugin for automatically adding annotations from Swagger to generated c
 
 Please note this plugin is not fully finished and is in development phase !! Feel free to help out and send pull requests.
 
+[![Build Status](https://redlab.ci.cloudbees.com/job/swagger-jaxb/badge/icon)](https://redlab.ci.cloudbees.com/job/swagger-jaxb/)
+
 Usage
 ============
 1.

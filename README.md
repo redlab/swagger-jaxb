@@ -7,7 +7,7 @@ Please note this plugin is not fully finished and is in development phase !! Fee
 
 Is all going well ? [![Build Status](https://redlab.ci.cloudbees.com/job/swagger-jaxb/badge/icon)](https://redlab.ci.cloudbees.com/job/swagger-jaxb/)
 
-Tests run in separate project, but do they work ?  [![Build Status](https://redlab.ci.cloudbees.com/job/swagger-jaxb-tck/badge/icon)](https://redlab.ci.cloudbees.com/job/swagger-jaxb-tck/) see here for the code [https://github.com/redlab/swagger-jaxb-tck swagger-jaxb-tck]
+Tests run in separate project, but do they work ?  [![Build Status](https://redlab.ci.cloudbees.com/job/swagger-jaxb-tck/badge/icon)](https://redlab.ci.cloudbees.com/job/swagger-jaxb-tck/) see here for the code https://github.com/redlab/swagger-jaxb-tck
 
 Usage
 ============

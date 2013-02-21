@@ -4,6 +4,11 @@
 	<groupId>be.redlab.jaxb</groupId>
 	<artifactId>swagger-jaxb</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -46,4 +51,23 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+	<scm>
+		<connection>scm:git:git@github.com:redlab/swagger-jaxb.git</connection>
+		<developerConnection>scm:git:git@github.com:redlab/swagger-jaxb.git</developerConnection>
+		<url>git@github.com:redlab/swagger-jaxb.git</url>
+	</scm>
+	<name>Swagger JAXB</name>
+	<description>XJC Plugin to add Swagger Annotations to your swagger generated JAXB classes, see github for info</description>
+	<url>https://github.com/redlab/swagger-jaxb</url>
+	<organization>
+		<url>http://www.redlab.be/</url>
+	</organization>
+	<issueManagement>
+		<system>github issues</system>
+		<url>https://github.com/redlab/swagger-jaxb/issues</url>
+	</issueManagement>
+	<ciManagement>
+		<system>jenkins-ci</system>
+		<url>https://redlab.ci.cloudbees.com/job/swagger-jaxb/</url>
+	</ciManagement>
 </project>

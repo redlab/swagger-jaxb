@@ -88,8 +88,8 @@ public class SwaggerAnnotationsJaxbPlugin extends Plugin {
 				for (JMethod m : o.implClass.methods()) {
 					if (m.name().startsWith("get") && m.name().length() > 3) {
 						JAnnotationUse annotate = m.annotate(ApiProperty.class);
-						String name = m.name();
-						annotate.param("value", prepareNameFromGetter(name));
+						String name = prepareNameFromGetter(m.name());
+						annotate.param("value", name);
 						String dataType = DataTypeDeterminationUtil.determineDataType(m.type());
 						if (dataType != null) {
 							annotate.param("dataType", dataType);

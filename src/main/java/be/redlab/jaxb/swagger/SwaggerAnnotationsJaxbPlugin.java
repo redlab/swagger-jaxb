@@ -88,12 +88,8 @@ public class SwaggerAnnotationsJaxbPlugin extends Plugin {
 				for (JMethod m : o.implClass.methods()) {
 					if (m.name().startsWith("get") && m.name().length() > 3) {
 						JAnnotationUse annotate = m.annotate(ApiProperty.class);
-						String name = m.name().substring(3);
-						StringBuilder b = new StringBuilder(Character.toLowerCase(name.charAt(0)));
-						if (name.length() > 1) {
-							b.append(name.substring(1));
-						}
-						annotate.param("value", b.toString());
+						String name = m.name();
+						annotate.param("value", prepareNameFromGetter(name));
 						String dataType = DataTypeDeterminationUtil.determineDataType(m.type());
 						if (dataType != null) {
 							annotate.param("dataType", dataType);
@@ -128,4 +124,13 @@ public class SwaggerAnnotationsJaxbPlugin extends Plugin {
 		return true;
 	}
 
+	protected String prepareNameFromGetter(final String getterName) {
+		String name = getterName.substring(3);
+		StringBuilder b = new StringBuilder();
+		b.append(Character.toLowerCase(name.charAt(0)));
+		if (name.length() > 1) {
+			b.append(name.substring(1));
+		}
+		return b.toString();
+	}
 }

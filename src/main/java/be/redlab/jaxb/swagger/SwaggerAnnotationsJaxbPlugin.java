@@ -1,11 +1,11 @@
 /*
  * Copyright 2013 Balder Van Camp
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
@@ -88,7 +88,11 @@ public class SwaggerAnnotationsJaxbPlugin extends Plugin {
 						 */
 						JAnnotationUse annotate = m.annotate(ApiProperty.class);
 						String name = m.name().substring(3);
-						annotate.param("value", name);
+						StringBuilder b = new StringBuilder(Character.toLowerCase(name.charAt(0)));
+						if (name.length() > 1) {
+							b.append(name.substring(1));
+						}
+						annotate.param("value", b.toString());
 						String dataType = DataTypeDeterminationUtil.determineDataType(m.type());
 						if (dataType != null) {
 							annotate.param("dataType", dataType);

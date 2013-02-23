@@ -36,6 +36,11 @@ public class SwaggerAnnotationsJaxbPluginTest {
 
 	@Test
 	public void prepareNameFromGetter() {
-		Assert.assertEquals("aString", plugin.prepareNameFromGetter("getAString"));
+		Assert.assertEquals("aString", plugin.prepareNameFromMethod("getAString", "get"));
+	}
+
+	@Test
+	public void prepareNameFromBooleanGetter() {
+		Assert.assertEquals("aString", plugin.prepareNameFromMethod("isAString", "is"));
 	}
 }

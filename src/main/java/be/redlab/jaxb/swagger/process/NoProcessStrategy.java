@@ -10,29 +10,24 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
-package be.redlab.jaxb.swagger;
+package be.redlab.jaxb.swagger.process;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import java.util.Collection;
+import java.util.Map;
+
+
+import com.sun.codemodel.JDefinedClass;
+import com.sun.codemodel.JFieldVar;
+import com.sun.codemodel.JMethod;
 
 /**
  * @author redlab
  *
  */
-public class SwaggerAnnotationsJaxbPluginTest {
+public final class NoProcessStrategy extends AbstractProcessStrategy {
+	@Override
+	public void doProcess(final JDefinedClass implClass, final Collection<JMethod> methods, final Map<String, JFieldVar> fields) {
+		throw new UnsupportedOperationException("Not Implemented");
 
-	private SwaggerAnnotationsJaxbPlugin plugin;
-
-	@Before
-	public void setup() {
-		plugin = new SwaggerAnnotationsJaxbPlugin();
 	}
-
-	@Test
-	public void optionName() {
-		Assert.assertEquals("swaggerify", plugin.getOptionName());
-	}
-
-
 }

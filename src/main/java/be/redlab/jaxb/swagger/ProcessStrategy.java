@@ -12,27 +12,12 @@
  */
 package be.redlab.jaxb.swagger;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import com.sun.codemodel.JDefinedClass;
 
-/**
- * @author redlab
- *
- */
-public class SwaggerAnnotationsJaxbPluginTest {
-
-	private SwaggerAnnotationsJaxbPlugin plugin;
-
-	@Before
-	public void setup() {
-		plugin = new SwaggerAnnotationsJaxbPlugin();
-	}
-
-	@Test
-	public void optionName() {
-		Assert.assertEquals("swaggerify", plugin.getOptionName());
-	}
-
+public interface ProcessStrategy {
+	/**
+	 * @param implClass
+	 */
+	void process(JDefinedClass implClass);
 
 }

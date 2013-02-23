@@ -10,29 +10,24 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
-package be.redlab.jaxb.swagger;
+package be.redlab.jaxb.swagger.process;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author redlab
  *
  */
-public class SwaggerAnnotationsJaxbPluginTest {
+public class ProcessUtilTest {
 
-	private SwaggerAnnotationsJaxbPlugin plugin;
-
-	@Before
-	public void setup() {
-		plugin = new SwaggerAnnotationsJaxbPlugin();
+	@Test
+	public void prepareNameFromGetter() {
+		Assert.assertEquals("aString", ProcessUtil.getInstance().prepareNameFromMethod("getAString", "get"));
 	}
 
 	@Test
-	public void optionName() {
-		Assert.assertEquals("swaggerify", plugin.getOptionName());
+	public void prepareNameFromBooleanGetter() {
+		Assert.assertEquals("aString", ProcessUtil.getInstance().prepareNameFromMethod("isAString", "is"));
 	}
-
-
 }

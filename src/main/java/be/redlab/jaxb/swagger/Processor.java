@@ -15,13 +15,17 @@ package be.redlab.jaxb.swagger;
 import com.sun.codemodel.JAnnotationUse;
 
 /**
+ * A Processor for {@link JAnnotationUse} apiAnnotations.
+ *
  * @author redlab
  *
  */
 public interface Processor {
 
 	/**
-	 * @param annotate
+	 * The annotation to process.
+	 * 
+	 * @param apiAnnotation
 	 */
 	void process(JAnnotationUse apiAnnotation);
 

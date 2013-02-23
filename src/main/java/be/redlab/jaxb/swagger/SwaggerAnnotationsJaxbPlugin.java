@@ -28,6 +28,8 @@ import com.wordnik.swagger.annotations.ApiClass;
 import com.wordnik.swagger.annotations.ApiProperty;
 
 /**
+ * The SwaggerAnnotationsJaxbPlugin adds Swaggers {@link ApiClass} and {@link ApiProperty} to JAXB Generated classes.
+ *
  * @author redlab
  *
  */
@@ -36,10 +38,10 @@ public class SwaggerAnnotationsJaxbPlugin extends Plugin {
 	private static final String SWAGGERIFY = "swaggerify";
 	private static final String USAGE = "Add this plugin to the JAXB classes generator classpath and provide the argument '-swaggerify'.";
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * The optio name to activate swagger annotations.
 	 *
-	 * @see com.sun.tools.xjc.Plugin#getOptionName()
+	 * @return swaggerify
 	 */
 	@Override
 	public String getOptionName() {
@@ -47,10 +49,8 @@ public class SwaggerAnnotationsJaxbPlugin extends Plugin {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see com.sun.tools.xjc.Plugin#getUsage()
+	/**
+	 * A usage description
 	 */
 	@Override
 	public String getUsage() {
@@ -70,6 +70,9 @@ public class SwaggerAnnotationsJaxbPlugin extends Plugin {
 	 * String notes() default "";
 	 * String dataType() default "";
 	 * boolean required() default false;
+	 */
+	/**
+	 * The run method called by XJC.
 	 */
 	@Override
 	public boolean run(final Outline outline, final Options opt, final ErrorHandler errorHandler) throws SAXException {

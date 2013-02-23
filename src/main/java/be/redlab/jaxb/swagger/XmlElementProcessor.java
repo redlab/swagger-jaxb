@@ -18,8 +18,12 @@ import java.util.Map;
 import com.sun.codemodel.JAnnotationUse;
 import com.sun.codemodel.JAnnotationValue;
 import com.sun.codemodel.JFormatter;
+import com.sun.xml.txw2.annotation.XmlElement;
+import com.wordnik.swagger.annotations.ApiProperty;
 
 /**
+ * Processes {@link XmlElement} annotations
+ *
  * @author redlab
  *
  */
@@ -28,6 +32,8 @@ public class XmlElementProcessor implements Processor {
 	private final JAnnotationUse jau;
 
 	/**
+	 * The {@link ApiProperty} annotation
+	 * 
 	 * @param jau
 	 */
 	public XmlElementProcessor(final JAnnotationUse jau) {

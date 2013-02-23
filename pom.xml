@@ -66,6 +66,7 @@
 	<url>https://github.com/redlab/swagger-jaxb</url>
 	<organization>
 		<url>http://www.redlab.be/</url>
+		<name>redlab</name>
 	</organization>
 	<issueManagement>
 		<system>github issues</system>

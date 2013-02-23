@@ -26,7 +26,8 @@ public interface Processor {
 	 * The annotation to process.
 	 * 
 	 * @param apiAnnotation
+	 * @param isPrimitive the method we're processing
 	 */
-	void process(JAnnotationUse apiAnnotation);
+	void process(JAnnotationUse apiAnnotation, boolean isPrimitive);
 
 }

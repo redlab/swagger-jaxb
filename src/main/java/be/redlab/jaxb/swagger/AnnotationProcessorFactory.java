@@ -13,12 +13,23 @@
 package be.redlab.jaxb.swagger;
 
 import com.sun.codemodel.JAnnotationUse;
+import com.sun.xml.txw2.annotation.XmlElement;
 
 /**
- * @author redlab
+ * AnnotationProcessorFactory. Returns a processor for annotations. Currently supports {@link XmlElement} annotations
+ * processor only.
  *
  */
 public class AnnotationProcessorFactory {
+
+	/**
+	 * No-Op ProcessorImplementation
+	 *
+	 */
+	private static final class ProcessorImplementation implements Processor {
+		public void process(final JAnnotationUse apiAnnotation, final boolean isPrimitive) {
+		}
+	}
 
 	/**
 	 * @param jau
@@ -28,10 +39,7 @@ public class AnnotationProcessorFactory {
 		if (jau.getAnnotationClass().name().equals("XmlElement")) {
 			return new XmlElementProcessor(jau);
 		}
-		return new Processor() {
-			public void process(final JAnnotationUse apiAnnotation) {
-			}
-		};
+		return new ProcessorImplementation();
 	}
 
 }

@@ -14,6 +14,7 @@ package be.redlab.jaxb.swagger;
 
 import java.io.StringWriter;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import com.sun.codemodel.JAnnotationUse;
 import com.sun.codemodel.JAnnotationValue;
@@ -28,12 +29,12 @@ import com.wordnik.swagger.annotations.ApiProperty;
  *
  */
 public class XmlElementProcessor implements Processor {
-
+	private static final Logger LOG = Logger.getLogger(XmlElementProcessor.class.getName());
 	private final JAnnotationUse jau;
 
 	/**
 	 * The {@link ApiProperty} annotation
-	 * 
+	 *
 	 * @param jau
 	 */
 	public XmlElementProcessor(final JAnnotationUse jau) {
@@ -45,20 +46,24 @@ public class XmlElementProcessor implements Processor {
 	 *
 	 * @see be.redlab.jaxb.swagger.Processor#process(com.sun.codemodel.JAnnotationUse)
 	 */
-	public void process(final JAnnotationUse apiAnnotation) {
+	public void process(final JAnnotationUse apiAnnotation, final boolean isPrimitive) {
 		Map<String, JAnnotationValue> members = jau.getAnnotationMembers();
-		JAnnotationValue value = members.get("defaultValue");
+		JAnnotationValue value = members.get("required");
+		if (isPrimitive || null != value) {
+			StringWriter w2 = new StringWriter();
+			JFormatter f = new JFormatter(w2);
+			value.generate(f);
+			LOG.finest("processed to " + w2.toString());
+			apiAnnotation.param("required", true);
+		} else {
+			apiAnnotation.param("required", false);
+		}
+		value = members.get("defaultValue");
 		if (null != value) {
 			StringWriter w2 = new StringWriter();
 			JFormatter f = new JFormatter(w2);
 			value.generate(f);
 			apiAnnotation.param("notes", w2.toString());
-		}
-		value = members.get("required");
-		if (null != value) {
-			apiAnnotation.param("required", true);
-		} else {
-			apiAnnotation.param("required", false);
 		}
 	}
 

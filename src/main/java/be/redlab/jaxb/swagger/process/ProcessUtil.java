@@ -12,6 +12,9 @@
  */
 package be.redlab.jaxb.swagger.process;
 
+import java.util.Collection;
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlElement;
 
 import be.redlab.jaxb.swagger.DataTypeDeterminationUtil;
@@ -22,6 +25,8 @@ import com.sun.codemodel.JDefinedClass;
 import com.sun.codemodel.JFieldVar;
 import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JMod;
+import com.sun.tools.xjc.outline.EnumConstantOutline;
+import com.sun.tools.xjc.outline.EnumOutline;
 import com.wordnik.swagger.annotations.ApiProperty;
 
 /**
@@ -61,11 +66,12 @@ public class ProcessUtil {
 	 * @param abstractProcessStrategy TODO
 	 * @param implClass
 	 * @param jFieldVar
+	 * @param enums
 	 */
-	public void addMethodAnnotationForField(final JDefinedClass implClass, final JFieldVar jFieldVar) {
+	public void addMethodAnnotationForField(final JDefinedClass implClass, final JFieldVar jFieldVar, final Collection<EnumOutline> enums) {
 		JMethod jm = getCorrespondingMethod(implClass, jFieldVar.name());
 		if (null != jm) {
-			addMethodAnnotation(implClass, jm, isRequired(jFieldVar), getDefault(jFieldVar));
+			addMethodAnnotation(implClass, jm, isRequired(jFieldVar), getDefault(jFieldVar), enums);
 		}
 	}
 
@@ -138,13 +144,15 @@ public class ProcessUtil {
 	 * @param m the method to add annotation on
 	 * @param default
 	 * @param required
+	 * @param enums
 	 */
-	public void addMethodAnnotation(final JDefinedClass o, final JMethod m, final boolean required, final String defaultValue) {
+	public void addMethodAnnotation(final JDefinedClass o, final JMethod m, final boolean required, final String defaultValue,
+			final Collection<EnumOutline> enums) {
 		if (null == XJCHelper.getAnnotation(m.annotations(), ApiProperty.class)) {
 			if (isValidMethod(m, GET)) {
-				internalAddMethodAnnotation(o, m, GET, required, defaultValue);
+				internalAddMethodAnnotation(o, m, GET, required, defaultValue, enums);
 			} else if (isValidMethod(m, IS)) {
-				internalAddMethodAnnotation(o, m, IS, required, defaultValue);
+				internalAddMethodAnnotation(o, m, IS, required, defaultValue, enums);
 			}
 		}
 	}
@@ -153,23 +161,47 @@ public class ProcessUtil {
 	 * @param o
 	 * @param m
 	 * @param prefix
+	 * @param enums
 	 */
 	protected void internalAddMethodAnnotation(final JDefinedClass implClass, final JMethod m, final String prefix,
 			final boolean required,
-			final String defaultValue) {
+			final String defaultValue, final Collection<EnumOutline> enums) {
 		JAnnotationUse apiProperty = m.annotate(ApiProperty.class);
 		String name = prepareNameFromMethod(m.name(), prefix);
 		apiProperty.param(VALUE, name);
-		String dataType = DataTypeDeterminationUtil.determineDataType(m.type());
-		if (dataType != null) {
-			apiProperty.param(DATA_TYPE, dataType);
+		EnumOutline eo = getKnownEnum(m.type().fullName(), enums);
+		String datatype;
+		if (null != eo) {
+			addAllowableValues(eo, apiProperty);
+			datatype = "string";
+		} else {
+			datatype = DataTypeDeterminationUtil.setDataType(m.type());
 		}
+		apiProperty.param(DATA_TYPE, datatype);
 		if (required) {
 			apiProperty.param(REQUIRED, true);
 		}
 		if (null != defaultValue) {
 			apiProperty.param(NOTES, defaultValue);
 		}
+	}
+
+	/**
+	 * @param forName
+	 * @param apiProperty
+	 */
+	private static void addAllowableValues(final EnumOutline eo, final JAnnotationUse apiProperty) {
+		List<EnumConstantOutline> constants = eo.constants;
+		StringBuilder b = new StringBuilder();
+		int size = constants.size();
+		int classNameLength = eo.clazz.fullName().length() + 1;
+		for (int i = 0; i < size; i++) {
+			b.append(constants.get(i).constRef.getName().substring(classNameLength));
+			if (i < size - 1) {
+				b.append(',');
+			}
+		}
+		apiProperty.param("allowableValues", b.toString());
 	}
 
 	/**
@@ -199,5 +231,19 @@ public class ProcessUtil {
 			b.append(name.substring(1));
 		}
 		return b.toString();
+	}
+
+	/**
+	 * @param clazz
+	 * @param enums
+	 * @return
+	 */
+	public EnumOutline getKnownEnum(final String clazz, final Collection<EnumOutline> enums) {
+		for (EnumOutline eo : enums) {
+			if (eo.clazz.fullName().equals(clazz)) {
+				return eo;
+			}
+		}
+		return null;
 	}
 }

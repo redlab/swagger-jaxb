@@ -42,10 +42,11 @@ public class DataTypeDeterminationUtil {
 	 * <li>string</li>
 	 * <li>Date a ISO-8601 Date, which is t in a String (1970-01-01T00:00:00.000+0000)</li>
 	 * </ul>
-	 * Currently supports all primitives and most of their wrapper classes, arrays.
+	 * Currently supports all primitives and most of their wrapper classes, arrays. enums are returned as string.
+	 * @param apiProperty TODO
 	 */
-	public static String determineDataType(final JType jType) {
-		String newName = null;
+	public static String setDataType(final JType jType) {
+		String newName = jType.name();
 		String fullName = jType.fullName();
 		if (jType.isArray()) {
 			newName = "Array";
@@ -96,9 +97,11 @@ public class DataTypeDeterminationUtil {
 						newName = "Set";
 					}
 				} catch (ClassNotFoundException e) {
-					newName = jType.name();
 				}
 		}
 		return newName;
 	}
+
+
+
 }

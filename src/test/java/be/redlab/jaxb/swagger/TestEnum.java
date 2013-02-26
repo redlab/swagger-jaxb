@@ -10,24 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
-package be.redlab.jaxb.swagger.process;
+package be.redlab.jaxb.swagger;
 
-import java.util.Collection;
-import java.util.Map;
-
-import com.sun.codemodel.JDefinedClass;
-import com.sun.codemodel.JFieldVar;
-import com.sun.codemodel.JMethod;
-import com.sun.tools.xjc.outline.EnumOutline;
-
-/**
- * @author redlab
- *
- */
-public final class NoProcessStrategy extends AbstractProcessStrategy {
-	@Override
-	public void doProcess(final JDefinedClass implClass, final Collection<JMethod> methods, final Map<String, JFieldVar> fields,
-			final Collection<EnumOutline> enums) {
-
-	}
+public class TestEnum {
 }

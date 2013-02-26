@@ -30,7 +30,7 @@ public class DataTypeDeterminationUtilTest {
 		JType jType = mock(JType.class);
 		when(jType.isPrimitive()).thenReturn(Boolean.TRUE);
 		when(jType.fullName()).thenReturn("int");
-		Assert.assertEquals("int", DataTypeDeterminationUtil.determineDataType(jType));
+		Assert.assertEquals("int", DataTypeDeterminationUtil.setDataType(jType));
 	}
 
 	@Test
@@ -38,7 +38,7 @@ public class DataTypeDeterminationUtilTest {
 		JType jType = mock(JType.class);
 		when(jType.isPrimitive()).thenReturn(Boolean.TRUE);
 		when(jType.fullName()).thenReturn("long");
-		Assert.assertEquals("long", DataTypeDeterminationUtil.determineDataType(jType));
+		Assert.assertEquals("long", DataTypeDeterminationUtil.setDataType(jType));
 	}
 
 	@Test
@@ -46,7 +46,7 @@ public class DataTypeDeterminationUtilTest {
 		JType jType = mock(JType.class);
 		when(jType.isPrimitive()).thenReturn(Boolean.TRUE);
 		when(jType.fullName()).thenReturn("double");
-		Assert.assertEquals("double", DataTypeDeterminationUtil.determineDataType(jType));
+		Assert.assertEquals("double", DataTypeDeterminationUtil.setDataType(jType));
 	}
 
 	@Test
@@ -54,7 +54,7 @@ public class DataTypeDeterminationUtilTest {
 		JType jType = mock(JType.class);
 		when(jType.isPrimitive()).thenReturn(Boolean.TRUE);
 		when(jType.fullName()).thenReturn("float");
-		Assert.assertEquals("float", DataTypeDeterminationUtil.determineDataType(jType));
+		Assert.assertEquals("float", DataTypeDeterminationUtil.setDataType(jType));
 	}
 
 	@Test
@@ -62,7 +62,7 @@ public class DataTypeDeterminationUtilTest {
 		JType jType = mock(JType.class);
 		when(jType.isPrimitive()).thenReturn(Boolean.TRUE);
 		when(jType.fullName()).thenReturn("byte");
-		Assert.assertEquals("byte", DataTypeDeterminationUtil.determineDataType(jType));
+		Assert.assertEquals("byte", DataTypeDeterminationUtil.setDataType(jType));
 	}
 
 	@Test
@@ -70,7 +70,7 @@ public class DataTypeDeterminationUtilTest {
 		JType jType = mock(JType.class);
 		when(jType.isPrimitive()).thenReturn(Boolean.TRUE);
 		when(jType.fullName()).thenReturn("short");
-		Assert.assertEquals("int", DataTypeDeterminationUtil.determineDataType(jType));
+		Assert.assertEquals("int", DataTypeDeterminationUtil.setDataType(jType));
 	}
 
 	@Test
@@ -79,7 +79,7 @@ public class DataTypeDeterminationUtilTest {
 		when(jType.isPrimitive()).thenReturn(Boolean.FALSE);
 		when(jType.isArray()).thenReturn(Boolean.TRUE);
 		when(jType.fullName()).thenReturn("java.lang.String[]");
-		Assert.assertEquals("Array", DataTypeDeterminationUtil.determineDataType(jType));
+		Assert.assertEquals("Array", DataTypeDeterminationUtil.setDataType(jType));
 	}
 
 	@Test
@@ -88,7 +88,7 @@ public class DataTypeDeterminationUtilTest {
 		when(jType.isPrimitive()).thenReturn(Boolean.FALSE);
 		when(jType.isArray()).thenReturn(Boolean.FALSE);
 		when(jType.fullName()).thenReturn("java.lang.String");
-		Assert.assertEquals("string", DataTypeDeterminationUtil.determineDataType(jType));
+		Assert.assertEquals("string", DataTypeDeterminationUtil.setDataType(jType));
 	}
 
 	@Test
@@ -97,7 +97,7 @@ public class DataTypeDeterminationUtilTest {
 		when(jType.isPrimitive()).thenReturn(Boolean.FALSE);
 		when(jType.isArray()).thenReturn(Boolean.FALSE);
 		when(jType.fullName()).thenReturn("java.lang.Integer");
-		Assert.assertEquals("int", DataTypeDeterminationUtil.determineDataType(jType));
+		Assert.assertEquals("int", DataTypeDeterminationUtil.setDataType(jType));
 	}
 
 	@Test
@@ -106,7 +106,7 @@ public class DataTypeDeterminationUtilTest {
 		when(jType.isPrimitive()).thenReturn(Boolean.FALSE);
 		when(jType.isArray()).thenReturn(Boolean.FALSE);
 		when(jType.fullName()).thenReturn("java.lang.Long");
-		Assert.assertEquals("long", DataTypeDeterminationUtil.determineDataType(jType));
+		Assert.assertEquals("long", DataTypeDeterminationUtil.setDataType(jType));
 	}
 
 	@Test
@@ -115,7 +115,7 @@ public class DataTypeDeterminationUtilTest {
 		when(jType.isPrimitive()).thenReturn(Boolean.FALSE);
 		when(jType.isArray()).thenReturn(Boolean.FALSE);
 		when(jType.fullName()).thenReturn("java.lang.Double");
-		Assert.assertEquals("double", DataTypeDeterminationUtil.determineDataType(jType));
+		Assert.assertEquals("double", DataTypeDeterminationUtil.setDataType(jType));
 	}
 
 	@Test
@@ -124,7 +124,7 @@ public class DataTypeDeterminationUtilTest {
 		when(jType.isPrimitive()).thenReturn(Boolean.FALSE);
 		when(jType.isArray()).thenReturn(Boolean.FALSE);
 		when(jType.fullName()).thenReturn("java.lang.Short");
-		Assert.assertEquals("int", DataTypeDeterminationUtil.determineDataType(jType));
+		Assert.assertEquals("int", DataTypeDeterminationUtil.setDataType(jType));
 	}
 
 	@Test
@@ -133,7 +133,7 @@ public class DataTypeDeterminationUtilTest {
 		when(jType.isPrimitive()).thenReturn(Boolean.FALSE);
 		when(jType.isArray()).thenReturn(Boolean.FALSE);
 		when(jType.fullName()).thenReturn("java.lang.Byte");
-		Assert.assertEquals("byte", DataTypeDeterminationUtil.determineDataType(jType));
+		Assert.assertEquals("byte", DataTypeDeterminationUtil.setDataType(jType));
 	}
 
 	@Test
@@ -142,7 +142,7 @@ public class DataTypeDeterminationUtilTest {
 		when(jType.isPrimitive()).thenReturn(Boolean.FALSE);
 		when(jType.isArray()).thenReturn(Boolean.FALSE);
 		when(jType.fullName()).thenReturn("java.lang.Float");
-		Assert.assertEquals("float", DataTypeDeterminationUtil.determineDataType(jType));
+		Assert.assertEquals("float", DataTypeDeterminationUtil.setDataType(jType));
 	}
 
 	@Test
@@ -151,7 +151,7 @@ public class DataTypeDeterminationUtilTest {
 		when(jType.isPrimitive()).thenReturn(Boolean.FALSE);
 		when(jType.isArray()).thenReturn(Boolean.FALSE);
 		when(jType.fullName()).thenReturn("java.util.List<Integer>");
-		Assert.assertEquals("List", DataTypeDeterminationUtil.determineDataType(jType));
+		Assert.assertEquals("List", DataTypeDeterminationUtil.setDataType(jType));
 	}
 
 	@Test
@@ -160,7 +160,7 @@ public class DataTypeDeterminationUtilTest {
 		when(jType.isPrimitive()).thenReturn(Boolean.FALSE);
 		when(jType.isArray()).thenReturn(Boolean.FALSE);
 		when(jType.fullName()).thenReturn("java.util.List");
-		Assert.assertEquals("List", DataTypeDeterminationUtil.determineDataType(jType));
+		Assert.assertEquals("List", DataTypeDeterminationUtil.setDataType(jType));
 	}
 
 	@Test
@@ -169,7 +169,7 @@ public class DataTypeDeterminationUtilTest {
 		when(jType.isPrimitive()).thenReturn(Boolean.FALSE);
 		when(jType.isArray()).thenReturn(Boolean.FALSE);
 		when(jType.fullName()).thenReturn("java.util.ArrayList<Integer>");
-		Assert.assertEquals("List", DataTypeDeterminationUtil.determineDataType(jType));
+		Assert.assertEquals("List", DataTypeDeterminationUtil.setDataType(jType));
 	}
 
 	@Test
@@ -178,7 +178,16 @@ public class DataTypeDeterminationUtilTest {
 		when(jType.isPrimitive()).thenReturn(Boolean.FALSE);
 		when(jType.isArray()).thenReturn(Boolean.FALSE);
 		when(jType.fullName()).thenReturn("javax.xml.datatype.XMLGregorianCalendar");
-		Assert.assertEquals("date", DataTypeDeterminationUtil.determineDataType(jType));
+		Assert.assertEquals("date", DataTypeDeterminationUtil.setDataType(jType));
 	}
 
+	@Test
+	public void typeAnObject() {
+		JType jType = mock(JType.class);
+		when(jType.isPrimitive()).thenReturn(Boolean.FALSE);
+		when(jType.isArray()).thenReturn(Boolean.FALSE);
+		when(jType.fullName()).thenReturn("be.redlab.jaxb.swagger.TestEnum");
+		when(jType.name()).thenReturn("TestEnum");
+		Assert.assertEquals("TestEnum", DataTypeDeterminationUtil.setDataType(jType));
+	}
 }

@@ -30,6 +30,7 @@ import com.sun.codemodel.JDefinedClass;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.Plugin;
 import com.sun.tools.xjc.outline.ClassOutline;
+import com.sun.tools.xjc.outline.EnumOutline;
 import com.sun.tools.xjc.outline.Outline;
 import com.wordnik.swagger.annotations.ApiClass;
 import com.wordnik.swagger.annotations.ApiProperty;
@@ -96,6 +97,7 @@ public class SwaggerAnnotationsJaxbPlugin extends Plugin {
 	@Override
 	public boolean run(final Outline outline, final Options opt, final ErrorHandler errorHandler) throws SAXException {
 		Collection<? extends ClassOutline> classes = outline.getClasses();
+		Collection<EnumOutline> enums = outline.getEnums();
 		for (ClassOutline o : classes) {
 			JDefinedClass implClass = o.implClass;
 			if (null != implClass && implClass.isClass() && !implClass.isAbstract() && !implClass.isInterface()
@@ -106,7 +108,7 @@ public class SwaggerAnnotationsJaxbPlugin extends Plugin {
 					access = XJCHelper.getAccessType(annotations);
 					if (null != access) {
 						addClassAnnotation(o);
-						getProcessStrategy(access).process(implClass);
+						getProcessStrategy(access).process(implClass, enums);
 					}
 				}
 			} else {

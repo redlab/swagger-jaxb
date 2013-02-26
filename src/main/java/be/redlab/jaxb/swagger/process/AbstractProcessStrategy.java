@@ -20,6 +20,7 @@ import be.redlab.jaxb.swagger.ProcessStrategy;
 import com.sun.codemodel.JDefinedClass;
 import com.sun.codemodel.JFieldVar;
 import com.sun.codemodel.JMethod;
+import com.sun.tools.xjc.outline.EnumOutline;
 
 public abstract class AbstractProcessStrategy implements ProcessStrategy {
 
@@ -39,10 +40,10 @@ public abstract class AbstractProcessStrategy implements ProcessStrategy {
 	 * @see
 	 * be.redlab.jaxb.swagger.ProcessStrategy#process(com.sun.codemodel.JDefinedClass)
 	 */
-	public final void process(final JDefinedClass implClass) {
+	public final void process(final JDefinedClass implClass, final Collection<EnumOutline> enums) {
 		Collection<JMethod> methods = implClass.methods();
 		Map<String, JFieldVar> fields = implClass.fields();
-		doProcess(implClass, methods, fields);
+		doProcess(implClass, methods, fields, enums);
 	}
 
 	/**
@@ -50,7 +51,8 @@ public abstract class AbstractProcessStrategy implements ProcessStrategy {
 	 * @param fields
 	 * @param methods
 	 */
-	public abstract void doProcess(JDefinedClass implClass, Collection<JMethod> methods, Map<String, JFieldVar> fields);
+	public abstract void doProcess(JDefinedClass implClass, Collection<JMethod> methods, Map<String, JFieldVar> fields,
+			Collection<EnumOutline> enums);
 
 
 }

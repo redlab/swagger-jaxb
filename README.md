@@ -9,7 +9,7 @@ Is all going well ? [![Build Status](https://redlab.ci.cloudbees.com/job/swagger
 
 Tests run in separate project, but do they work ?  [![Build Status](https://redlab.ci.cloudbees.com/job/swagger-jaxb-tck/badge/icon)](https://redlab.ci.cloudbees.com/job/swagger-jaxb-tck/) see here for the code https://github.com/redlab/swagger-jaxb-tck
 
-There is a demo app at http://swagger-jaxb-demo.redlab.cloudbees.net/swagger-jaxb-web/swagger/index.html 
+There is a demo app at http://swagger-jaxb-demo.redlab.cloudbees.net/ 
 
 Usage
 ============

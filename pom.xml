@@ -16,7 +16,7 @@
 		<dependency>
 			<groupId>com.wordnik</groupId>
 			<artifactId>swagger-annotations_2.9.1</artifactId>
-			<version>1.2.1</version>
+			<version>1.2.5</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.xml.parsers</groupId>
@@ -76,4 +76,12 @@
 		<system>jenkins-ci</system>
 		<url>https://redlab.ci.cloudbees.com/job/swagger-jaxb/</url>
 	</ciManagement>
+	<licenses>
+		<license>
+			<name>Apache 2</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+			<comments>A business-friendly OSS license</comments>
+		</license>
+	</licenses>
 </project>

@@ -1,26 +1,29 @@
 /*
- * Copyright 2013 Balder Van Camp
+ *  Copyright 2017 Balder Van Camp
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
- * specific language governing permissions and limitations under the License.
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
  */
+
 package be.redlab.jaxb.swagger;
-
-import java.io.StringWriter;
-import java.util.Collection;
-
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 
 import com.sun.codemodel.JAnnotationUse;
 import com.sun.codemodel.JAnnotationValue;
 import com.sun.codemodel.JFormatter;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import java.io.StringWriter;
+import java.util.Collection;
 
 /**
  * @author redlab
@@ -45,8 +48,7 @@ public final class XJCHelper {
 			StringWriter w = new StringWriter();
 			JFormatter f = new JFormatter(w);
 			jAnnotationValue.generate(f);
-			String value = w.toString();
-			return value;
+			return w.toString();
 		}
 		return null;
 	}
@@ -57,7 +59,6 @@ public final class XJCHelper {
 	 * @param annotations collection of annotations to search in
 	 * @param annotation the annotation class to search for
 	 * @return the annotation or null if not found
-	 * @throws ElementNotFoundException if the annotation was not found in the collection
 	 */
 	public static JAnnotationUse getAnnotation(final Collection<JAnnotationUse> annotations, final Class<?> annotation) {
 		String name = annotation.getName();
@@ -74,7 +75,6 @@ public final class XJCHelper {
 	 *
 	 * @param annotations the annotations to search in for {@link XmlAccessorType}
 	 * @return {@link XmlAccessType} if valid is found, null otherwise
-	 * @throws ElementNotFoundException if the {@link XmlAccessorType} annotations was not found
 	 */
 	public static XmlAccessType getAccessType(final Collection<JAnnotationUse> annotations) {
 		JAnnotationUse a = getAnnotation(annotations, XmlAccessorType.class);

@@ -1,30 +1,25 @@
 /*
- * Copyright 2013 Balder Van Camp
+ *  Copyright 2017 Balder Van Camp
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
- * specific language governing permissions and limitations under the License.
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
  */
+
 package be.redlab.jaxb.swagger;
-
-import java.util.Collection;
-
-import javax.xml.bind.annotation.XmlAccessType;
-
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
 
 import be.redlab.jaxb.swagger.process.FieldProcessStrategy;
 import be.redlab.jaxb.swagger.process.NoProcessStrategy;
 import be.redlab.jaxb.swagger.process.PropertyProcessStrategy;
 import be.redlab.jaxb.swagger.process.PublicMemberProcessStrategy;
-
 import com.sun.codemodel.JAnnotationUse;
 import com.sun.codemodel.JDefinedClass;
 import com.sun.tools.xjc.Options;
@@ -32,16 +27,20 @@ import com.sun.tools.xjc.Plugin;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.EnumOutline;
 import com.sun.tools.xjc.outline.Outline;
-import com.wordnik.swagger.annotations.ApiClass;
-import com.wordnik.swagger.annotations.ApiProperty;
+import io.swagger.annotations.ApiModel;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import java.util.Collection;
 
 /**
- * The SwaggerAnnotationsJaxbPlugin adds Swaggers {@link ApiClass} and {@link ApiProperty} to JAXB Generated classes.
+ * The SwaggerAnnotationsJaxbPlugin adds Swaggers {@link io.swagger.annotations.ApiModel} and {@link io.swagger.annotations.ApiModelProperty} to JAXB Generated classes.
  * Currently only working with Field Accessor annotations.
  *
  *
  * @author redlab
- * @param <a>
  *
  */
 public class SwaggerAnnotationsJaxbPlugin extends Plugin {
@@ -119,12 +118,12 @@ public class SwaggerAnnotationsJaxbPlugin extends Plugin {
 	}
 
 	/**
-	 * Add the class level annotation, {@link ApiClass}
+	 * Add the class level annotation, {@link io.swagger.annotations.ApiModel}
 	 *
 	 * @param o the ClassOutline
 	 */
 	protected void addClassAnnotation(final ClassOutline o) {
-		JAnnotationUse apiClass = o.implClass.annotate(ApiClass.class);
+		JAnnotationUse apiClass = o.implClass.annotate(ApiModel.class);
 		apiClass.param(VALUE, o.ref.name());
 		apiClass.param(DESCRIPTION, new StringBuilder(o.ref.fullName())
 				.append(DESCRIPTION_CLASS).toString());

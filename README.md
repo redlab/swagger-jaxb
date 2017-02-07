@@ -3,13 +3,7 @@ swagger-jaxb
 
 JAXB XJC Plugin for automatically adding annotations from Swagger to generated classes from an XSD
 
-Please note this plugin is in development phase !! Currently only available with maven through the sonatype snapshot repositories.
-
-Is all going well ? [![Build Status](https://redlab.ci.cloudbees.com/job/swagger-jaxb/badge/icon)](https://redlab.ci.cloudbees.com/job/swagger-jaxb/)
-
-Tests run in separate project, but do they work ?  [![Build Status](https://redlab.ci.cloudbees.com/job/swagger-jaxb-tck/badge/icon)](https://redlab.ci.cloudbees.com/job/swagger-jaxb-tck/) see here for the code https://github.com/redlab/swagger-jaxb-tck
-
-There is a demo app at http://swagger-jaxb-demo.redlab.cloudbees.net/ 
+Tests run in separate project, see here for the code https://github.com/redlab/swagger-jaxb-tck
 
 Usage
 ============
@@ -93,4 +87,3 @@ use with jaxb2-maven-plugin
     </dependencies>
 ```
 
-The plugin dependencies are needed until the JAXB2 plugin is updated to use the latest version of jaxb-xjc and jaxp. Otherwise the code generation will fail due to missing methods. Note: I think this will change the generated code for boolean getters/setters, not fully sure I must verify it to be sure :-)

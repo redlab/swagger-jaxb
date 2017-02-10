@@ -7,7 +7,7 @@ Tests run in separate project, see here for the code https://github.com/redlab/s
 
 Usage
 ============
-
+* REQUIRE Java 8 or higher! 
 * build the plugin with maven
 * install it in your local repo
 * add the plugin to your classpath and use -swaggify on your jaxb command line or configure it i your pom

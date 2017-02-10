@@ -16,7 +16,6 @@
 
 package be.redlab.jaxb.swagger.process;
 
-import be.redlab.jaxb.swagger.DataTypeDeterminationUtil;
 import be.redlab.jaxb.swagger.XJCHelper;
 import com.sun.codemodel.*;
 import com.sun.tools.xjc.outline.EnumConstantOutline;
@@ -167,11 +166,7 @@ public class ProcessUtil {
 		String datatype;
 		if (null != eo) {
 			addAllowableValues(eo, apiProperty);
-			datatype = "string";
-		} else {
-			datatype = DataTypeDeterminationUtil.setDataType(m.type());
 		}
-		apiProperty.param(DATA_TYPE, datatype);
 		if (required) {
 			apiProperty.param(REQUIRED, true);
 		}

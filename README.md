@@ -8,6 +8,7 @@ Tests run in separate project, see here for the code https://github.com/redlab/s
 Usage
 ============
 
+* REQUIRE JAVA 8 OR HIGHER
 * build the plugin with maven
 * install it in your local repo
 * add the plugin to your classpath and use -swaggify on your jaxb command line or configure it i your pom
@@ -28,7 +29,7 @@ use with jaxb2-maven-plugin
                     <dependency>
                         <groupId>be.redlab.jaxb</groupId>
                         <artifactId>swagger-jaxb</artifactId>
-                        <version>1.5-SNAPSHOT</version>
+                        <version>1.5</version>
                     </dependency>
                     <dependency>
                         <groupId>javax.xml.parsers</groupId>

@@ -1,25 +1,28 @@
 /*
- * Copyright 2013 Balder Van Camp
+ *  Copyright 2017 Balder Van Camp
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
- * specific language governing permissions and limitations under the License.
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
  */
+
 package be.redlab.jaxb.swagger;
 
+import com.sun.codemodel.JType;
+
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-
-import javax.xml.datatype.XMLGregorianCalendar;
-
-import com.sun.codemodel.JType;
 
 /**
  * Helper that determines what type of Swagger Type description should be used for which Java type.
@@ -43,7 +46,6 @@ public class DataTypeDeterminationUtil {
 	 * <li>Date a ISO-8601 Date, which is t in a String (1970-01-01T00:00:00.000+0000)</li>
 	 * </ul>
 	 * Currently supports all primitives and most of their wrapper classes, arrays. enums are returned as string.
-	 * @param apiProperty TODO
 	 */
 	public static String setDataType(final JType jType) {
 		String newName = jType.name();
@@ -92,9 +94,9 @@ public class DataTypeDeterminationUtil {
 					if (XMLGregorianCalendar.class.isAssignableFrom(forName)) {
 						newName = "date";
 					} else if (List.class.isAssignableFrom(forName)) {
-						newName = "List";
+						newName = "java.util.ArrayList";
 					} else if (Set.class.isAssignableFrom(forName)) {
-						newName = "Set";
+						newName = "java.util.HashSet";
 					}
 				} catch (ClassNotFoundException e) {
 				}

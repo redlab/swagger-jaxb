@@ -15,7 +15,62 @@ Usage
 or
 * add sonatype snapshot repository to your repo manager. ( post an issue if you really want dev version in Maven Central )
  
-use with jaxb2-maven-plugin 
+ 
+ use with org.jvnet.jaxb2.maven2 maven-jaxb2-plugin
+ ```
+ 	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.jvnet.jaxb2.maven2</groupId>
+				<artifactId>maven-jaxb2-plugin</artifactId>
+				<version>0.13.2</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<schemaIncludes>
+						<schemaInclude>**/*.xsd</schemaInclude>
+					</schemaIncludes>
+					<strict>true</strict>
+					<verbose>true</verbose>
+					<extension>true</extension>
+					<removeOldOutput>true</removeOldOutput>
+					<args>
+						<arguments>-swaggerify</arguments>
+					</args>
+					<plugins>
+						<plugin>
+							<groupId>be.redlab.jaxb</groupId>
+							<artifactId>swagger-jaxb</artifactId>
+							<version>1.5</version>
+						</plugin>
+					</plugins>
+					<dependencies>
+						<dependency>
+							<groupId>io.swagger</groupId>
+							<artifactId>swagger-annotations</artifactId>
+							<version>1.5.12</version>
+						</dependency>
+					</dependencies>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-annotations</artifactId>
+			<version>1.5.12</version>
+		</dependency>
+	</dependencies>
+ 
+``` 
+=========== 
+use with org.codehaus.mojo   jaxb2-maven-plugin 
 
 ```
     <build>

@@ -124,7 +124,8 @@ public class SwaggerAnnotationsJaxbPlugin extends Plugin {
 	 */
 	protected void addClassAnnotation(final ClassOutline o) {
 		JAnnotationUse apiClass = o.implClass.annotate(ApiModel.class);
-		apiClass.param(VALUE, o.ref.name());
+		String value = o.target.isElement() ? o.target.getElementName().getLocalPart() : o.ref.name();
+		apiClass.param(VALUE, value);
 		apiClass.param(DESCRIPTION, new StringBuilder(o.ref.fullName())
 				.append(DESCRIPTION_CLASS).toString());
 	}

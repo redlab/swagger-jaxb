@@ -109,7 +109,7 @@ public class SwaggerAnnotationsJaxbPlugin extends Plugin {
 					access = XJCHelper.getAccessType(annotations);
 					if (null != access) {
 						addClassAnnotation(o);
-						getProcessStrategy(access).process(implClass, enums);
+						getProcessStrategy(access).process(implClass, o.target, enums);
 					}
 				}
 			} else {

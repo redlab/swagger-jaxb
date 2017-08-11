@@ -18,8 +18,14 @@ package be.redlab.jaxb.swagger.process;
 
 import be.redlab.jaxb.swagger.XJCHelper;
 import com.sun.codemodel.*;
+import com.sun.tools.xjc.model.CClassInfo;
+import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.outline.EnumConstantOutline;
 import com.sun.tools.xjc.outline.EnumOutline;
+import com.sun.tools.xjc.reader.xmlschema.bindinfo.BindInfo;
+import com.sun.xml.xsom.XSAnnotation;
+import com.sun.xml.xsom.XSComponent;
+import com.sun.xml.xsom.XSParticle;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -60,14 +66,15 @@ public class ProcessUtil {
 	}
 
 	/**
-	 * @param implClass
-	 * @param jFieldVar
-	 * @param enums
-	 */
-	public void addMethodAnnotationForField(final JDefinedClass implClass, final JFieldVar jFieldVar, final Collection<EnumOutline> enums) {
+     * @param implClass
+     * @param targetClass
+     * @param jFieldVar
+     * @param enums
+     */
+	public void addMethodAnnotationForField(final JDefinedClass implClass, CClassInfo targetClass, final JFieldVar jFieldVar, final Collection<EnumOutline> enums) {
 		JMethod jm = getCorrespondingMethod(implClass, jFieldVar.name());
 		if (null != jm) {
-			addMethodAnnotation(implClass, jm, isRequired(jFieldVar), getDefault(jFieldVar), enums);
+			addMethodAnnotation(implClass, targetClass, jm, isRequired(jFieldVar), getDefault(jFieldVar), enums);
 		}
 	}
 
@@ -133,35 +140,41 @@ public class ProcessUtil {
 
 	/**
 	 * Add method level annotation {@link ApiModelProperty} if not already on the method
-	 *
 	 * @param o the ClassOutline
-	 * @param m the method to add annotation on
-	 * @param defaultValue
-	 * @param required
-	 * @param enums
-	 */
-	public void addMethodAnnotation(final JDefinedClass o, final JMethod m, final boolean required, final String defaultValue,
-			final Collection<EnumOutline> enums) {
+	 * @param t the TargetClass
+     * @param m the method to add annotation on
+     * @param required
+     * @param defaultValue
+     * @param enums
+     */
+	public void addMethodAnnotation(final JDefinedClass o, CClassInfo t, final JMethod m, final boolean required, final String defaultValue,
+                                    final Collection<EnumOutline> enums) {
 		if (null == XJCHelper.getAnnotation(m.annotations(), ApiModelProperty.class)) {
 			if (isValidMethod(m, GET)) {
-				internalAddMethodAnnotation(o, m, GET, required, defaultValue, enums);
+				internalAddMethodAnnotation(o, t, m, GET, required, defaultValue, enums);
 			} else if (isValidMethod(m, IS)) {
-				internalAddMethodAnnotation(o, m, IS, required, defaultValue, enums);
+				internalAddMethodAnnotation(o, t, m, IS, required, defaultValue, enums);
 			}
 		}
 	}
 
-	/**
-	 * @param m
-	 * @param prefix
-	 * @param enums
-	 */
-	protected void internalAddMethodAnnotation(final JDefinedClass implClass, final JMethod m, final String prefix,
-			final boolean required,
-			final String defaultValue, final Collection<EnumOutline> enums) {
+    /**
+     *
+     * @param implClass
+     * @param targetClass
+     * @param m
+     * @param prefix
+     * @param required
+     * @param defaultValue
+     * @param enums
+     */
+	protected void internalAddMethodAnnotation(final JDefinedClass implClass, CClassInfo targetClass, final JMethod m, final String prefix,
+                                               final boolean required,
+                                               final String defaultValue, final Collection<EnumOutline> enums) {
 		JAnnotationUse apiProperty = m.annotate(ApiModelProperty.class);
 		String name = prepareNameFromMethod(m.name(), prefix);
-		apiProperty.param(VALUE, name);
+        String description = getDescription(targetClass, name);
+		apiProperty.param(VALUE, description);
 		EnumOutline eo = getKnownEnum(m.type().fullName(), enums);
 		String datatype;
 		if (null != eo) {
@@ -174,6 +187,30 @@ public class ProcessUtil {
 			apiProperty.param(NOTES, defaultValue);
 		}
 	}
+
+	/**
+	 * Extract value from {@code <xs:annotation><xs:documentation>} for property if exists.
+	 *
+	 * @param targetClass the TargetClass
+	 * @param propertyName property name
+	 * @return value from {@code <xs:annotation><xs:documentation>} or <code>null</code> if
+	 * {@code <xs:annotation><xs:documentation>} does not exists.
+	 */
+    private String getDescription(CClassInfo targetClass, String propertyName) {
+        CPropertyInfo property = targetClass.getProperty(propertyName);
+        String description = propertyName;
+        XSComponent schemaComponent = property.getSchemaComponent();
+        if (schemaComponent instanceof XSParticle) {
+            XSAnnotation annotation = ((XSParticle) schemaComponent).getTerm().getAnnotation();
+            if (annotation != null) {
+                Object annotationObj = annotation.getAnnotation();
+                if (annotationObj instanceof BindInfo) {
+                    description = ((BindInfo) annotationObj).getDocumentation();
+                }
+            }
+        }
+        return description;
+    }
 
 	/**
 	 * @param apiProperty

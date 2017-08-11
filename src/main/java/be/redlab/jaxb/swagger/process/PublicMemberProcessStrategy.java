@@ -21,6 +21,7 @@ import com.sun.codemodel.JAnnotationUse;
 import com.sun.codemodel.JDefinedClass;
 import com.sun.codemodel.JFieldVar;
 import com.sun.codemodel.JMethod;
+import com.sun.tools.xjc.model.CClassInfo;
 import com.sun.tools.xjc.outline.EnumOutline;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -36,20 +37,20 @@ import java.util.Map.Entry;
  */
 public final class PublicMemberProcessStrategy extends AbstractProcessStrategy {
 	@Override
-	public void doProcess(final JDefinedClass implClass, final Collection<JMethod> methods, final Map<String, JFieldVar> fields,
+	public void doProcess(final JDefinedClass implClass, CClassInfo targetClass, final Collection<JMethod> methods, final Map<String, JFieldVar> fields,
 			final Collection<EnumOutline> enums) {
 		for (JMethod jm : methods) {
 			int mods = jm.mods().getValue();
 			if (processUtil.validMethodMods(mods) && null == XJCHelper.getAnnotation(jm.annotations(), XmlTransient.class)
 					&& null == XJCHelper.getAnnotation(jm.annotations(), ApiModelProperty.class)) {
 				JAnnotationUse annotation = XJCHelper.getAnnotation(jm.annotations(), XmlElement.class);
-				processUtil.addMethodAnnotation(implClass, jm, processUtil.isRequiredByAnnotation(annotation), null, enums);
+				processUtil.addMethodAnnotation(implClass, targetClass, jm, processUtil.isRequiredByAnnotation(annotation), null, enums);
 			}
 		}
 		for (Entry<String, JFieldVar> e : fields.entrySet()) {
 			int mods = e.getValue().mods().getValue();
 			if (processUtil.validFieldMods(mods) && null == XJCHelper.getAnnotation(e.getValue().annotations(), XmlTransient.class)) {
-				processUtil.addMethodAnnotationForField(implClass, e.getValue(), enums);
+				processUtil.addMethodAnnotationForField(implClass, targetClass, e.getValue(), enums);
 			}
 		}
 	}

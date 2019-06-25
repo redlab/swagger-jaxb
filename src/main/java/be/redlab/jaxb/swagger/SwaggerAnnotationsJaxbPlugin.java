@@ -124,7 +124,7 @@ public class SwaggerAnnotationsJaxbPlugin extends Plugin {
 	 *
 	 * @param o the ClassOutline
 	 */
-	protected void addClassAnnotation(final ClassOutline o) {
+    private void addClassAnnotation(final ClassOutline o) {
 		JAnnotationUse apiClass = o.implClass.annotate(ApiModel.class);
 		String value = o.target.isElement() ? o.target.getElementName().getLocalPart() : o.ref.name();
 		apiClass.param(VALUE, value);
@@ -149,7 +149,7 @@ public class SwaggerAnnotationsJaxbPlugin extends Plugin {
 		return null;
 	}
 
-	public static ProcessStrategy getProcessStrategy(final XmlAccessType access) {
+	private static ProcessStrategy getProcessStrategy(final XmlAccessType access) {
 		switch (access) {
 		case FIELD:
 			return null == fieldProcessor ? fieldProcessor = new FieldProcessStrategy() : fieldProcessor;

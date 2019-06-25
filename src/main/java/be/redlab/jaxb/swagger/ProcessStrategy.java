@@ -23,11 +23,7 @@ import com.sun.tools.xjc.outline.EnumOutline;
 import java.util.Collection;
 
 public interface ProcessStrategy {
-	/**
-	 * @param implClass
-	 * @param targetClass
-	 * @param enums
-	 */
+
 	void process(JDefinedClass implClass, CClassInfo targetClass, Collection<EnumOutline> enums);
 
 }

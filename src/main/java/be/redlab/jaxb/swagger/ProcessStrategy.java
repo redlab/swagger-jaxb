@@ -17,6 +17,7 @@
 package be.redlab.jaxb.swagger;
 
 import com.sun.codemodel.JDefinedClass;
+import com.sun.tools.xjc.model.CClassInfo;
 import com.sun.tools.xjc.outline.EnumOutline;
 
 import java.util.Collection;
@@ -24,8 +25,9 @@ import java.util.Collection;
 public interface ProcessStrategy {
 	/**
 	 * @param implClass
+	 * @param targetClass
 	 * @param enums
 	 */
-	void process(JDefinedClass implClass, Collection<EnumOutline> enums);
+	void process(JDefinedClass implClass, CClassInfo targetClass, Collection<EnumOutline> enums);
 
 }

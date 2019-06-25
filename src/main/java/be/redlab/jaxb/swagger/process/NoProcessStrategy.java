@@ -19,6 +19,7 @@ package be.redlab.jaxb.swagger.process;
 import com.sun.codemodel.JDefinedClass;
 import com.sun.codemodel.JFieldVar;
 import com.sun.codemodel.JMethod;
+import com.sun.tools.xjc.model.CClassInfo;
 import com.sun.tools.xjc.outline.EnumOutline;
 
 import java.util.Collection;
@@ -30,7 +31,7 @@ import java.util.Map;
  */
 public final class NoProcessStrategy extends AbstractProcessStrategy {
 	@Override
-	public void doProcess(final JDefinedClass implClass, final Collection<JMethod> methods, final Map<String, JFieldVar> fields,
+	public void doProcess(final JDefinedClass implClass, CClassInfo targetClass, final Collection<JMethod> methods, final Map<String, JFieldVar> fields,
 			final Collection<EnumOutline> enums) {
 
 	}

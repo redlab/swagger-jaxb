@@ -27,6 +27,8 @@ import com.sun.tools.xjc.Plugin;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.EnumOutline;
 import com.sun.tools.xjc.outline.Outline;
+import com.sun.tools.xjc.reader.xmlschema.bindinfo.BindInfo;
+import com.sun.xml.xsom.XSAnnotation;
 import io.swagger.annotations.ApiModel;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
@@ -107,7 +109,7 @@ public class SwaggerAnnotationsJaxbPlugin extends Plugin {
 					access = XJCHelper.getAccessType(annotations);
 					if (null != access) {
 						addClassAnnotation(o);
-						getProcessStrategy(access).process(implClass, enums);
+						getProcessStrategy(access).process(implClass, o.target, enums);
 					}
 				}
 			} else {
@@ -124,9 +126,27 @@ public class SwaggerAnnotationsJaxbPlugin extends Plugin {
 	 */
 	protected void addClassAnnotation(final ClassOutline o) {
 		JAnnotationUse apiClass = o.implClass.annotate(ApiModel.class);
-		apiClass.param(VALUE, o.ref.name());
-		apiClass.param(DESCRIPTION, new StringBuilder(o.ref.fullName())
-				.append(DESCRIPTION_CLASS).toString());
+		String value = o.target.isElement() ? o.target.getElementName().getLocalPart() : o.ref.name();
+		apiClass.param(VALUE, value);
+		String documentation = getDocumentation(o);
+		apiClass.param(DESCRIPTION, (documentation != null) ? documentation : o.ref.fullName() + DESCRIPTION_CLASS);
+	}
+
+	/**
+	 * Extract value from {@code <xs:annotation><xs:documentation>} if exists.
+	 *
+	 * @param o the ClassOutline
+	 * @return value from {@code <xs:annotation><xs:documentation>} or <code>null</code> if
+	 * {@code <xs:annotation><xs:documentation>} does not exists.
+	 */
+	private String getDocumentation(final ClassOutline o) {
+		XSAnnotation annotation = o.target.getSchemaComponent().getAnnotation();
+		if (annotation != null) {
+			if (annotation.getAnnotation() instanceof BindInfo) {
+				return ((BindInfo) annotation.getAnnotation()).getDocumentation();
+			}
+		}
+		return null;
 	}
 
 	public static ProcessStrategy getProcessStrategy(final XmlAccessType access) {

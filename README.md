@@ -3,6 +3,9 @@ swagger-jaxb
 
 JAXB XJC Plugin for automatically adding annotations from Swagger to generated classes from an XSD
 
+[![Develop  Build Status](https://travis-ci.com/redlab/swagger-jaxb.svg?branch=develop)](https://travis-ci.com/redlab/swagger-jaxb)
+[![Master  Build Status](https://travis-ci.com/redlab/swagger-jaxb.svg?branch=master)](https://travis-ci.com/redlab/swagger-jaxb)
+
 Tests run in separate project, see here for the code https://github.com/redlab/swagger-jaxb-tck
 
 Usage

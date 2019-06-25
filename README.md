@@ -3,11 +3,15 @@ swagger-jaxb
 
 JAXB XJC Plugin for automatically adding annotations from Swagger to generated classes from an XSD
 
+[![Develop  Build Status](https://travis-ci.com/redlab/swagger-jaxb.svg?branch=develop)](https://travis-ci.com/redlab/swagger-jaxb)
+[![Master  Build Status](https://travis-ci.com/redlab/swagger-jaxb.svg?branch=master)](https://travis-ci.com/redlab/swagger-jaxb)
+
 Tests run in separate project, see here for the code https://github.com/redlab/swagger-jaxb-tck
 
 Usage
 ============
-* REQUIRE Java 8 or higher! 
+
+* REQUIRE Java 8 or higher!
 * build the plugin with maven
 * install it in your local repo
 * add the plugin to your classpath and use -swaggify on your jaxb command line or configure it i your pom
@@ -83,7 +87,7 @@ use with org.codehaus.mojo   jaxb2-maven-plugin
                     <dependency>
                         <groupId>be.redlab.jaxb</groupId>
                         <artifactId>swagger-jaxb</artifactId>
-                        <version>1.5</version>
+                        <version>1.5-SNAPSHOT</version>
                     </dependency>
                     <dependency>
                         <groupId>javax.xml.parsers</groupId>

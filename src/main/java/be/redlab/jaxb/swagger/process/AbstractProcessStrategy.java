@@ -20,6 +20,7 @@ import be.redlab.jaxb.swagger.ProcessStrategy;
 import com.sun.codemodel.JDefinedClass;
 import com.sun.codemodel.JFieldVar;
 import com.sun.codemodel.JMethod;
+import com.sun.tools.xjc.model.CClassInfo;
 import com.sun.tools.xjc.outline.EnumOutline;
 
 import java.util.Collection;
@@ -28,12 +29,12 @@ import java.util.Map;
 public abstract class AbstractProcessStrategy implements ProcessStrategy {
 
 
-	protected final ProcessUtil processUtil;
+	final ProcessUtil processUtil;
 
 	/**
 	 *
 	 */
-	public AbstractProcessStrategy() {
+	AbstractProcessStrategy() {
 		this.processUtil = ProcessUtil.getInstance();
 	}
 
@@ -43,19 +44,15 @@ public abstract class AbstractProcessStrategy implements ProcessStrategy {
 	 * @see
 	 * be.redlab.jaxb.swagger.ProcessStrategy#process(com.sun.codemodel.JDefinedClass)
 	 */
-	public final void process(final JDefinedClass implClass, final Collection<EnumOutline> enums) {
+	public final void process(final JDefinedClass implClass, CClassInfo targetClass, final Collection<EnumOutline> enums) {
 		Collection<JMethod> methods = implClass.methods();
 		Map<String, JFieldVar> fields = implClass.fields();
-		doProcess(implClass, methods, fields, enums);
+		doProcess(implClass, targetClass, methods, fields, enums);
 	}
 
-	/**
-	 * @param implClass
-	 * @param fields
-	 * @param methods
-	 */
-	public abstract void doProcess(JDefinedClass implClass, Collection<JMethod> methods, Map<String, JFieldVar> fields,
-			Collection<EnumOutline> enums);
+
+	protected abstract void doProcess(JDefinedClass implClass, CClassInfo targetClass, Collection<JMethod> methods, Map<String, JFieldVar> fields,
+									  Collection<EnumOutline> enums);
 
 
 }

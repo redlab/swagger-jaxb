@@ -27,67 +27,69 @@ import java.util.Collection;
 
 /**
  * @author redlab
- *
  */
 public final class XJCHelper {
-	private static final String VALUE = "value";
+    private static final String VALUE = "value";
 
-	private XJCHelper() {
-	}
+    private XJCHelper() {
+    }
 
-	/**
-	 * Returns a Stringyfied version of the value of an annotation member
-	 * 
-	 * @param a the annotation
-	 * @param member the member to fetch
-	 * @return the String value of the member or null of not found
-	 */
-	public static String getStringValueFromAnnotationMember(final JAnnotationUse a, final String member) {
-		JAnnotationValue jAnnotationValue = a.getAnnotationMembers().get(member);
-		if (null != jAnnotationValue) {
-			StringWriter w = new StringWriter();
-			JFormatter f = new JFormatter(w);
-			jAnnotationValue.generate(f);
-			return w.toString();
-		}
-		return null;
-	}
+    /**
+     * Returns a Stringyfied version of the value of an annotation member
+     *
+     * @param a      the annotation
+     * @param member the member to fetch
+     * @return the String value of the member or null of not found
+     */
+    public static String getStringValueFromAnnotationMember(final JAnnotationUse a, final String member) {
+        JAnnotationValue jAnnotationValue = a.getAnnotationMembers().get(member);
+        if (null != jAnnotationValue) {
+            StringWriter w = new StringWriter();
+            JFormatter f = new JFormatter(w);
+            jAnnotationValue.generate(f);
+            return w.toString();
+        }
+        return null;
+    }
 
-	/**
-	 * Searches for the given class in the JAnnotationUse collection
-	 *
-	 * @param annotations collection of annotations to search in
-	 * @param annotation the annotation class to search for
-	 * @return the annotation or null if not found
-	 */
-	public static JAnnotationUse getAnnotation(final Collection<JAnnotationUse> annotations, final Class<?> annotation) {
-		String name = annotation.getName();
-		for (JAnnotationUse a : annotations) {
-			String fullName = a.getAnnotationClass().fullName();
-			if (fullName.equals(name)) {
-				return a;
-			}
-		}
-		return null;
-	}
+    /**
+     * Searches for the given class in the JAnnotationUse collection
+     *
+     * @param annotations collection of annotations to search in
+     * @param annotation  the annotation class to search for
+     * @return the annotation or null if not found
+     */
+    public static JAnnotationUse getAnnotation(final Collection<JAnnotationUse> annotations, final Class<?> annotation) {
+        String name = annotation.getName();
+        for (JAnnotationUse a : annotations) {
+            String fullName = a.getAnnotationClass().fullName();
+            if (fullName.equals(name)) {
+                return a;
+            }
+        }
+        return null;
+    }
 
-	/**
-	 *
-	 * @param annotations the annotations to search in for {@link XmlAccessorType}
-	 * @return {@link XmlAccessType} if valid is found, null otherwise
-	 */
-	public static XmlAccessType getAccessType(final Collection<JAnnotationUse> annotations) {
-		JAnnotationUse a = getAnnotation(annotations, XmlAccessorType.class);
-		String value = XJCHelper.getStringValueFromAnnotationMember(a, VALUE);
-		if ("javax.xml.bind.annotation.XmlAccessType.FIELD".equals(value)) {
-			return XmlAccessType.FIELD;
-		} else if ("javax.xml.bind.annotation.XmlAccessType.PROPERTY".equals(value)) {
-			return XmlAccessType.PROPERTY;
-		} else if ("javax.xml.bind.annotation.XmlAccessType.PUBLIC_MEMBER".equals(value)) {
-			return XmlAccessType.PUBLIC_MEMBER;
-		} else if ("javax.xml.bind.annotation.XmlAccessType.NONE".equals(value)) {
-			return XmlAccessType.NONE;
-		}
-		return null;
-	}
+    /**
+     * @param annotations the annotations to search in for {@link XmlAccessorType}
+     * @return {@link XmlAccessType} if valid is found, null otherwise
+     */
+    public static XmlAccessType getAccessType(final Collection<JAnnotationUse> annotations) {
+        JAnnotationUse a = getAnnotation(annotations, XmlAccessorType.class);
+        String value = null;
+        if (a != null) {
+            value = XJCHelper.getStringValueFromAnnotationMember(a, VALUE);
+
+            if ("javax.xml.bind.annotation.XmlAccessType.FIELD".equals(value)) {
+                return XmlAccessType.FIELD;
+            } else if ("javax.xml.bind.annotation.XmlAccessType.PROPERTY".equals(value)) {
+                return XmlAccessType.PROPERTY;
+            } else if ("javax.xml.bind.annotation.XmlAccessType.PUBLIC_MEMBER".equals(value)) {
+                return XmlAccessType.PUBLIC_MEMBER;
+            } else if ("javax.xml.bind.annotation.XmlAccessType.NONE".equals(value)) {
+                return XmlAccessType.NONE;
+            }
+        }
+        return null;
+    }
 }

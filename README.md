@@ -11,15 +11,18 @@ Tests run in separate project, see here for the code https://github.com/redlab/s
 Usage
 ============
 
-* REQUIRE Java 8 or higher!
-* build the plugin with maven
+* REQUIRE Java 8 (or higher!? not yet tested)
+* Get it from maven central.
+* add the plugin to your classpath and use -swaggify on your jaxb command line or configure it in your pom.
+
+for the dev version:
+
+* build the plugin with maven3
 * install it in your local repo
-* add the plugin to your classpath and use -swaggify on your jaxb command line or configure it i your pom
-or
-* add sonatype snapshot repository to your repo manager. ( post an issue if you really want dev version in Maven Central )
+* or add sonatype snapshot repository to your repo manager.
  
  
- use with org.jvnet.jaxb2.maven2 maven-jaxb2-plugin
+#### use with org.jvnet.jaxb2.maven2 maven-jaxb2-plugin
  ```
  	<build>
 		<plugins>
@@ -49,7 +52,7 @@ or
 						<plugin>
 							<groupId>be.redlab.jaxb</groupId>
 							<artifactId>swagger-jaxb</artifactId>
-							<version>1.5</version>
+							<version>1.6</version>
 						</plugin>
 					</plugins>
 					<dependencies>
@@ -72,8 +75,8 @@ or
 	</dependencies>
  
 ``` 
-=========== 
-use with org.codehaus.mojo   jaxb2-maven-plugin 
+
+#### use with org.codehaus.mojo   jaxb2-maven-plugin 
 
 ```
     <build>
@@ -87,7 +90,7 @@ use with org.codehaus.mojo   jaxb2-maven-plugin
                     <dependency>
                         <groupId>be.redlab.jaxb</groupId>
                         <artifactId>swagger-jaxb</artifactId>
-                        <version>1.5-SNAPSHOT</version>
+                        <version>1.6</version>
                     </dependency>
                     <dependency>
                         <groupId>javax.xml.parsers</groupId>
@@ -146,3 +149,7 @@ use with org.codehaus.mojo   jaxb2-maven-plugin
     </dependencies>
 ```
 
+Kudos to other committers: 
+
+* [JohneDoe](https://github.com/JohneDoe) 
+* [Andrey Grigorov](https://github.com/peneksglazami)

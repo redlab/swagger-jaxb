@@ -34,7 +34,7 @@ public abstract class AbstractProcessStrategy implements ProcessStrategy {
 	/**
 	 *
 	 */
-	AbstractProcessStrategy() {
+	public AbstractProcessStrategy() {
 		this.processUtil = ProcessUtil.getInstance();
 	}
 

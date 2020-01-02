@@ -29,13 +29,12 @@ import java.util.List;
  * @author redlab
  *
  */
-public class ProcessUtil extends AbstractProcessUtil {
+class ProcessUtil extends AbstractProcessUtil {
 	private static final String NOTES = "notes";
-	private static final String DATA_TYPE = "dataType";
 	private static final String VALUE = "value";
 	private static final ProcessUtil myself = new ProcessUtil();
 
-	protected ProcessUtil() {
+	private ProcessUtil() {
 	}
 
 	static ProcessUtil getInstance() {
@@ -66,7 +65,7 @@ public class ProcessUtil extends AbstractProcessUtil {
 	 * @param t the TargetClass
      * @param m the method to add annotation on
      */
-	public void addMethodAnnotation(final JDefinedClass o, CClassInfo t, final JMethod m, final boolean required, final String defaultValue,
+	void addMethodAnnotation(final JDefinedClass o, CClassInfo t, final JMethod m, final boolean required, final String defaultValue,
                                     final Collection<EnumOutline> enums) {
         if (isAnnotationNotPresent(m)) {
 			if (isValidMethod(m, GET)) {
@@ -77,17 +76,7 @@ public class ProcessUtil extends AbstractProcessUtil {
 		}
 	}
 
-	/**
-     *
-     * @param implClass
-     * @param targetClass
-     * @param m
-     * @param prefix
-     * @param required
-     * @param defaultValue
-     * @param enums
-     */
-	protected void internalAddMethodAnnotation(final JDefinedClass implClass, CClassInfo targetClass, final JMethod m, final String prefix,
+	private void internalAddMethodAnnotation(CClassInfo targetClass, final JMethod m, final String prefix,
                                                final boolean required,
                                                final String defaultValue, final Collection<EnumOutline> enums) {
 		JAnnotationUse apiProperty = m.annotate(ApiModelProperty.class);

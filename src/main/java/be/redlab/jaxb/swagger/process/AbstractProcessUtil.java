@@ -56,12 +56,9 @@ public abstract class AbstractProcessUtil {
      * @return
      */
     public boolean validFieldMods(final int mods) {
-        if ((mods & JMod.FINAL) != 0 || (mods & JMod.STATIC) != 0
-            || (mods & JMod.ABSTRACT) != 0 || (mods & JMod.NATIVE) != 0 || (mods & JMod.TRANSIENT) != 0
-            || (mods & JMod.VOLATILE) != 0) {
-            return false;
-        }
-        return true;
+        return (mods & JMod.FINAL) == 0 && (mods & JMod.STATIC) == 0
+                && (mods & JMod.ABSTRACT) == 0 && (mods & JMod.NATIVE) == 0 && (mods & JMod.TRANSIENT) == 0
+                && (mods & JMod.VOLATILE) == 0;
 
     }
 
@@ -156,13 +153,8 @@ public abstract class AbstractProcessUtil {
      * @return
      */
     public boolean validMethodMods(int mods) {
-        if (((mods & JMod.PROTECTED) != 0 || (mods & JMod.PRIVATE) != 0 || (mods & JMod.FINAL) != 0 ||
-             (mods & JMod.STATIC) != 0
-             || (mods & JMod.ABSTRACT) != 0 || (mods & JMod.NATIVE) != 0 || (mods & JMod.TRANSIENT) != 0 ||
-             (mods & JMod.VOLATILE) != 0)) {
-            return false;
-        }
-        return true;
+        return ((mods & JMod.PROTECTED) == 0 && (mods & JMod.PRIVATE) == 0 && (mods & JMod.FINAL) == 0 && (mods & JMod.STATIC) == 0
+                && (mods & JMod.ABSTRACT) == 0 && (mods & JMod.NATIVE) == 0 && (mods & JMod.TRANSIENT) == 0 && (mods & JMod.VOLATILE) == 0);
     }
 
     public boolean isAnnotationNotPresent(JAnnotatable a) {

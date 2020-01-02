@@ -29,7 +29,7 @@ import java.util.Map;
 public abstract class AbstractProcessStrategy implements ProcessStrategy {
 
 
-	protected final AbstractProcessUtil processUtil;
+	final AbstractProcessUtil processUtil;
 
 	/**
 	 *

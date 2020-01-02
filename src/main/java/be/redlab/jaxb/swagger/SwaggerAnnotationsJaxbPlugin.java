@@ -134,7 +134,7 @@ public class SwaggerAnnotationsJaxbPlugin extends Plugin {
 	 * @return value from {@code <xs:annotation><xs:documentation>} or <code>null</code> if
 	 * {@code <xs:annotation><xs:documentation>} does not exists.
 	 */
-	private String getDocumentation(final ClassOutline o) {
+	protected String getDocumentation(final ClassOutline o) {
 		XSAnnotation annotation = o.target.getSchemaComponent().getAnnotation();
 		if (annotation != null) {
 			if (annotation.getAnnotation() instanceof BindInfo) {

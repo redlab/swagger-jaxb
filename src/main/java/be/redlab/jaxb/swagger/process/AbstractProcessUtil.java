@@ -185,7 +185,7 @@ public abstract class AbstractProcessUtil {
             XSAnnotation annotation = ((XSParticle) schemaComponent).getTerm().getAnnotation();
             if (annotation != null) {
                 Object annotationObj = annotation.getAnnotation();
-                if (annotationObj instanceof BindInfo) {
+                if (annotationObj instanceof BindInfo && ((BindInfo) annotationObj).getDocumentation() != null) {
                     description = ((BindInfo) annotationObj).getDocumentation();
                 }
             }

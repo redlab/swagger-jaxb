@@ -30,6 +30,15 @@ import java.util.Map;
  *
  */
 public final class NoProcessStrategy extends AbstractProcessStrategy {
+
+	public NoProcessStrategy(AbstractProcessUtil processUtil) {
+		super(processUtil);
+	}
+
+	public NoProcessStrategy() {
+		super();
+	}
+
 	@Override
 	public void doProcess(final JDefinedClass implClass, CClassInfo targetClass, final Collection<JMethod> methods, final Map<String, JFieldVar> fields,
 			final Collection<EnumOutline> enums) {

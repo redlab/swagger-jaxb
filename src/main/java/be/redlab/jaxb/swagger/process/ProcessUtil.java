@@ -16,19 +16,12 @@
 
 package be.redlab.jaxb.swagger.process;
 
-import be.redlab.jaxb.swagger.XJCHelper;
 import com.sun.codemodel.*;
 import com.sun.tools.xjc.model.CClassInfo;
-import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.outline.EnumConstantOutline;
 import com.sun.tools.xjc.outline.EnumOutline;
-import com.sun.tools.xjc.reader.xmlschema.bindinfo.BindInfo;
-import com.sun.xml.xsom.XSAnnotation;
-import com.sun.xml.xsom.XSComponent;
-import com.sun.xml.xsom.XSParticle;
 import io.swagger.annotations.ApiModelProperty;
 
-import javax.xml.bind.annotation.XmlElement;
 import java.util.Collection;
 import java.util.List;
 
@@ -36,12 +29,9 @@ import java.util.List;
  * @author redlab
  *
  */
-class ProcessUtil {
+class ProcessUtil extends AbstractProcessUtil {
 	private static final String NOTES = "notes";
-	private static final String REQUIRED = "required";
-	private static final String IS = "is";
 	private static final String VALUE = "value";
-	private static final String GET = "get";
 	private static final ProcessUtil myself = new ProcessUtil();
 
 	private ProcessUtil() {
@@ -51,11 +41,9 @@ class ProcessUtil {
 		return myself;
 	}
 
-	boolean validFieldMods(final int mods) {
-		return (mods & JMod.FINAL) == 0 && (mods & JMod.STATIC) == 0
-				&& (mods & JMod.ABSTRACT) == 0 && (mods & JMod.NATIVE) == 0 && (mods & JMod.TRANSIENT) == 0
-				&& (mods & JMod.VOLATILE) == 0;
-
+	@Override
+	public void addAnnotationForField(JDefinedClass implClass, CClassInfo targetClass, JFieldVar jFieldVar, Collection<EnumOutline> enums) {
+		addMethodAnnotationForField(implClass, targetClass, jFieldVar, enums);
 	}
 
 
@@ -66,41 +54,9 @@ class ProcessUtil {
 		}
 	}
 
-	private String getDefault(final JFieldVar jFieldVar) {
-		JAnnotationUse annotation = XJCHelper.getAnnotation(jFieldVar.annotations(), XmlElement.class);
-		if (null != annotation) {
-			return XJCHelper.getStringValueFromAnnotationMember(annotation, "defaultValue");
-		}
-		return null;
-	}
-
-	private boolean isRequired(final JFieldVar jFieldVar) {
-		return jFieldVar.type().isPrimitive()
-				|| isRequiredByAnnotation(XJCHelper.getAnnotation(jFieldVar.annotations(), XmlElement.class));
-	}
-
-	boolean isRequiredByAnnotation(final JAnnotationUse annotation) {
-		return null != annotation && "true".equalsIgnoreCase(XJCHelper.getStringValueFromAnnotationMember(annotation, REQUIRED));
-	}
-
-	private JMethod getCorrespondingMethod(final JDefinedClass implClass, final String key) {
-		StringBuilder b = new StringBuilder(key.substring(0, 1).toUpperCase());
-		if (key.length() > 1) {
-			b.append(key.substring(1));
-		}
-		String get = GET + b.toString();
-		String is = IS + b.toString();
-		for (JMethod m : implClass.methods()) {
-			if (get.equals(m.name()) || is.equals(m.name())) {
-				return m;
-			}
-		}
-		return null;
-	}
-
-	boolean validMethodMods(final int mods) {
-		return ((mods & JMod.PROTECTED) == 0 && (mods & JMod.PRIVATE) == 0 && (mods & JMod.FINAL) == 0 && (mods & JMod.STATIC) == 0
-				&& (mods & JMod.ABSTRACT) == 0 && (mods & JMod.NATIVE) == 0 && (mods & JMod.TRANSIENT) == 0 && (mods & JMod.VOLATILE) == 0);
+	@Override
+	public void addAnnotationForMethod(JDefinedClass o, CClassInfo t, JMethod m, boolean required, String defaultValue, Collection<EnumOutline> enums) {
+		addMethodAnnotation(o, t, m, required, defaultValue,enums);
 	}
 
 	/**
@@ -110,8 +66,8 @@ class ProcessUtil {
      * @param m the method to add annotation on
      */
 	void addMethodAnnotation(final JDefinedClass o, CClassInfo t, final JMethod m, final boolean required, final String defaultValue,
-							 final Collection<EnumOutline> enums) {
-		if (null == XJCHelper.getAnnotation(m.annotations(), ApiModelProperty.class)) {
+                                    final Collection<EnumOutline> enums) {
+        if (isAnnotationNotPresent(m)) {
 			if (isValidMethod(m, GET)) {
 				internalAddMethodAnnotation(t, m, GET, required, defaultValue, enums);
 			} else if (isValidMethod(m, IS)) {
@@ -121,8 +77,8 @@ class ProcessUtil {
 	}
 
 	private void internalAddMethodAnnotation(CClassInfo targetClass, final JMethod m, final String prefix,
-											 final boolean required,
-											 final String defaultValue, final Collection<EnumOutline> enums) {
+                                               final boolean required,
+                                               final String defaultValue, final Collection<EnumOutline> enums) {
 		JAnnotationUse apiProperty = m.annotate(ApiModelProperty.class);
 		String name = prepareNameFromMethod(m.name(), prefix);
         String description = getDescription(targetClass, name);
@@ -140,29 +96,8 @@ class ProcessUtil {
 	}
 
 	/**
-	 * Extract value from {@code <xs:annotation><xs:documentation>} for property if exists.
-	 *
-	 * @param targetClass the TargetClass
-	 * @param propertyName property name
-	 * @return value from {@code <xs:annotation><xs:documentation>} or <code>null</code> if
-	 * {@code <xs:annotation><xs:documentation>} does not exists.
+	 * @param apiProperty
 	 */
-    private String getDescription(CClassInfo targetClass, String propertyName) {
-        CPropertyInfo property = targetClass.getProperty(propertyName);
-        String description = propertyName;
-        XSComponent schemaComponent = property.getSchemaComponent();
-        if (schemaComponent instanceof XSParticle) {
-            XSAnnotation annotation = ((XSParticle) schemaComponent).getTerm().getAnnotation();
-            if (annotation != null) {
-                Object annotationObj = annotation.getAnnotation();
-                if (annotationObj instanceof BindInfo) {
-                    description = ((BindInfo) annotationObj).getDocumentation();
-                }
-            }
-        }
-        return description;
-    }
-
 	private static void addAllowableValues(final EnumOutline eo, final JAnnotationUse apiProperty) {
 		List<EnumConstantOutline> constants = eo.constants;
 		StringBuilder b = new StringBuilder();
@@ -206,12 +141,4 @@ class ProcessUtil {
 		return b.toString();
 	}
 
-	private EnumOutline getKnownEnum(final String clazz, final Collection<EnumOutline> enums) {
-		for (EnumOutline eo : enums) {
-			if (eo.clazz.fullName().equals(clazz)) {
-				return eo;
-			}
-		}
-		return null;
-	}
 }

@@ -148,6 +148,49 @@ for the dev version:
         </dependency>
     </dependencies>
 ```
+Also you can use plugin with Gradle
+```
+configurations {
+    xjcConf
+}
+
+    xjcConf 'com.sun.xml.bind:jaxb-xjc:2.2.6'
+    xjcConf 'com.sun.xml.bind:jaxb-impl:2.2.6'
+    xjcConf 'javax.xml.bind:jaxb-api:2.2.6'
+    xjcConf 'org.jvnet.jaxb2_commons:jaxb2-basics:1.11.1'
+    xjcConf 'org.jvnet.jaxb2_commons:jaxb2-basics-runtime:1.11.1'
+    xjcConf 'org.jvnet.jaxb2_commons:jaxb2-basics-tools:1.11.1'
+    xjcConf 'org.jvnet.jaxb2_commons:jaxb2-basics-ant:1.11.1'
+    xjcConf 'org.jvnet.jaxb2_commons:jaxb2-basics-annotate:1.0.3'    
+    
+    xjcConf('be.redlab.jaxb:swagger-jaxb:1.5') {
+        exclude group: 'com.sun.xml.bind'
+        exclude group: 'javax.xml.bind'
+    }
+}
+
+task generateClassesFromXsd {
+    doLast {
+        ant.taskdef(
+                name: 'antXjc',
+                classname: 'org.jvnet.jaxb2_commons.xjc.XJC2Task',
+                classpath: configurations.xjcConf.asPath
+        )
+
+        System.setProperty('javax.xml.accessExternalSchema', 'file')
+
+        ant.antXjc(
+                destdir: 'src/main/java',
+                binding: 'src/main/resources/xsd/binding.xjb',
+                extension: 'true') {
+            arg(value: '-swaggerify')
+            schema(dir: 'src/main/resources/xsd') {
+                include(name: '*.xsd')
+            }
+        }
+    }
+}
+```
 
 Kudos to other committers: 
 

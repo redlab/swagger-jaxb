@@ -35,6 +35,15 @@ import java.util.Map.Entry;
  *
  */
 public final class PropertyProcessStrategy extends AbstractProcessStrategy {
+
+	public PropertyProcessStrategy(AbstractProcessUtil processUtil) {
+		super(processUtil);
+	}
+
+	public PropertyProcessStrategy() {
+		super();
+	}
+
 	@Override
 	public void doProcess(final JDefinedClass implClass, final CClassInfo targetClass, final Collection<JMethod> methods, final Map<String, JFieldVar> fields,
 			final Collection<EnumOutline> enums) {
@@ -42,13 +51,13 @@ public final class PropertyProcessStrategy extends AbstractProcessStrategy {
 			int mods = jm.mods().getValue();
 			if (processUtil.validMethodMods(mods) && null == XJCHelper.getAnnotation(jm.annotations(), XmlTransient.class)) {
 				JAnnotationUse annotation = XJCHelper.getAnnotation(jm.annotations(), XmlElement.class);
-				processUtil.addMethodAnnotation(implClass, targetClass, jm, processUtil.isRequiredByAnnotation(annotation), null, enums);
+				processUtil.addAnnotationForMethod(implClass, targetClass, jm, processUtil.isRequiredByAnnotation(annotation), null, enums);
 			}
 		}
 		for (Entry<String, JFieldVar> e : fields.entrySet()) {
 			int mods = e.getValue().mods().getValue();
 			if (processUtil.validFieldMods(mods) && null != XJCHelper.getAnnotation(e.getValue().annotations(), XmlElement.class)) {
-				processUtil.addMethodAnnotationForField(implClass, targetClass, e.getValue(), enums);
+				processUtil.addAnnotationForField(implClass, targetClass, e.getValue(), enums);
 			}
 		}
 	}

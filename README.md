@@ -52,7 +52,7 @@ for the dev version:
 						<plugin>
 							<groupId>be.redlab.jaxb</groupId>
 							<artifactId>swagger-jaxb</artifactId>
-							<version>1.6</version>
+							<version>1.7</version>
 						</plugin>
 					</plugins>
 					<dependencies>
@@ -90,7 +90,7 @@ for the dev version:
                     <dependency>
                         <groupId>be.redlab.jaxb</groupId>
                         <artifactId>swagger-jaxb</artifactId>
-                        <version>1.6</version>
+                        <version>1.7</version>
                     </dependency>
                     <dependency>
                         <groupId>javax.xml.parsers</groupId>
@@ -163,7 +163,7 @@ configurations {
     xjcConf 'org.jvnet.jaxb2_commons:jaxb2-basics-ant:1.11.1'
     xjcConf 'org.jvnet.jaxb2_commons:jaxb2-basics-annotate:1.0.3'    
     
-    xjcConf('be.redlab.jaxb:swagger-jaxb:1.5') {
+    xjcConf('be.redlab.jaxb:swagger-jaxb:1.7') {
         exclude group: 'com.sun.xml.bind'
         exclude group: 'javax.xml.bind'
     }
@@ -196,3 +196,4 @@ Kudos to other committers:
 
 * [JohneDoe](https://github.com/JohneDoe) 
 * [Andrey Grigorov](https://github.com/peneksglazami)
+* Imre Scheffer - Unverified
